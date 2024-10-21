@@ -1,0 +1,176 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["tracing"]
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id             String          @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  username       String
+  email          String          @unique
+  role           String
+  status         String
+  emailVerified  DateTime?
+  image          String?
+  hashedPassword String
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  stores         Store[]
+  categories     StoreCategory[]
+  Coupon         Coupon[]
+  Post           Post[]
+}
+
+model Store {
+  id              String          @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  locale          String
+  status          String
+  title           String
+  name            String          @unique
+  slug            String          @unique
+  description     String
+  image           String
+  coverImage      String
+  rating          Float
+  votes           Int
+  metaTitle       String
+  metaDescription String
+  canonicalUrl    String
+  ogImage         String
+  ogTitle         String
+  ogDescription   String
+  ogUrl           String
+  translateLink   String?
+  isFeatured      Boolean?
+  isRecommended   Boolean?
+  isFooter        Boolean?
+  isAddHome       Boolean?
+  isTopRated      Boolean?
+  coupons         Coupon[]
+  categoryIds     String[]        @default([]) @db.ObjectId
+  storeCategories StoreCategory[] @relation(fields: [categoryIds], references: [id])
+  auther          Admin           @relation(fields: [userId], references: [id])
+  userId          String          @db.ObjectId
+}
+
+model Coupon {
+  id               String          @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt        DateTime?       @default(now())
+  updatedAt        DateTime?       @updatedAt
+  title            String
+  status           String
+  locale           String
+  description      String
+  image            String
+  code             String
+  discount         Float
+  type             String
+  countries        Json[]          @default([])
+  views            Int
+  usings           Int
+  likes            Int
+  expiredDate      String
+  storeId          String          @db.ObjectId
+  StoreCategory    StoreCategory[] @relation(fields: [storeCategoryIds], references: [id])
+  storeCategoryIds String[]        @default([]) @db.ObjectId
+  auther           Admin           @relation(fields: [userId], references: [id])
+  userId           String          @db.ObjectId
+  Store            Store           @relation(fields: [storeId], references: [id])
+}
+
+model StoreCategory {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  locale          String
+  status          String
+  title           String
+  name            String   @unique
+  slug            String   @unique
+  description     String
+  image           String
+  coverImage      String?
+  rating          Float?
+  translateLink   String?
+  metaTitle       String
+  metaDescription String
+  canonicalUrl    String
+  ogImage         String
+  ogTitle         String
+  ogDescription   String
+  ogUrl           String
+  userId          String   @db.ObjectId
+  couponIds       String[] @db.ObjectId
+  storeIds        String[] @db.ObjectId
+  stores          Store[]  @relation(fields: [storeIds], references: [id])
+  coupons         Coupon[] @relation(fields: [couponIds], references: [id])
+  auther          Admin    @relation(fields: [userId], references: [id])
+}
+
+model Post {
+  id              String         @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  locale          String
+  status          String
+  title           String
+  slug            String         @unique
+  description     String
+  image           String
+  translateLink   String?
+  metaTitle       String
+  metaDescription String
+  canonicalUrl    String
+  ogImage         String
+  ogTitle         String
+  ogDescription   String
+  ogUrl           String
+  isFeatured      Boolean?
+  isRecommended   Boolean?
+  isFooter        Boolean?
+  isAddHome       Boolean?
+  userId          String         @db.ObjectId
+  auther          Admin          @relation(fields: [userId], references: [id])
+  PostCategory    PostCategory[] @relation(fields: [postCategoryIds], references: [id])
+  postCategoryIds String[]       @default([]) @db.ObjectId
+  Tags            Tags[]         @relation(fields: [tagsIds], references: [id])
+  tagsIds         String[]       @default([]) @db.ObjectId
+}
+
+model PostCategory {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  status          String?
+  name            String
+  title           String
+  locale          String
+  slug            String   @unique
+  description     String
+  image           String?
+  translateLink   String?
+  metaTitle       String?
+  metaDescription String?
+  posts           Post[]   @relation(fields: [postIds], references: [id])
+  postIds         String[] @default([]) @db.ObjectId
+}
+
+model Tags {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  status      String
+  name        String
+  slug        String   @unique
+  locale      String
+  description String
+  posts       Post[]   @relation(fields: [postIds], references: [id])
+  postIds     String[] @default([]) @db.ObjectId
+}

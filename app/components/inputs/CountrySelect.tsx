@@ -1,0 +1,127 @@
+"use client";
+/* eslint-disable @next/next/no-img-element */
+import React, { useCallback, useEffect, useState } from "react";
+import CountryFlag from "react-country-flag";
+import SelectItem from "./SelectItem";
+import { useLocale, useTranslations } from "next-intl";
+import { useFormContext } from "react-hook-form";
+
+const countries = [
+    {
+        id: 1,
+        name: { ar: "السعودية", en: "Saudi Arabia" },
+        value: "SA",
+        flag: "SA",
+    },
+    {
+        id: 2,
+        name: { ar: "الإمارات", en: "Emirates" },
+        value: "AE",
+        flag: "AE",
+    },
+    { id: 3, name: { ar: "مصر", en: "Egypt" }, value: "EG", flag: "EG" },
+    { id: 4, name: { ar: "الكويت", en: "Kuwait" }, value: "KW", flag: "KW" },
+    { id: 5, name: { ar: "البحرين", en: "Bahrain" }, value: "BH", flag: "BH" },
+    { id: 6, name: { ar: "عمان", en: "Oman" }, value: "OM", flag: "OM" },
+    { id: 7, name: { ar: "قطر", en: "Qatar" }, value: "QA", flag: "QA" },
+    {
+        id: 8,
+        name: { ar: "دول الخليج", en: "GCC" },
+        value: "GCC",
+        flag: "",
+    },
+    {
+        id: 9,
+        name: { ar: "الدول العربية", en: "All countries" },
+        value: "MENA",
+        flag: "",
+    },
+    {
+        id: 10,
+        name: { ar: "دول العالم", en: "World Wide" },
+        value: "WW",
+        flag: "",
+    },
+];
+
+export const CountrySelect = ({ name }: { name: string }) => {
+    const [selectedItems, setSelectedItems] = useState<any[]>([]);
+    const { setValue, getValues } = useFormContext();
+
+    const setCustomValue = useCallback(
+        (name: string, value: any) => {
+            setValue(name, value, {
+                shouldDirty: true,
+                shouldTouch: true,
+                shouldValidate: true,
+            });
+        },
+        [setValue]
+    );
+
+    const handleSelect = (value: any) => {
+        if (selectedItems.includes(value)) {
+            setSelectedItems(
+                selectedItems.filter((item) => item.id !== value.id)
+            );
+        } else {
+            setSelectedItems([...selectedItems, value]);
+        }
+    };
+
+    useEffect(() => {
+        setCustomValue(name, [...selectedItems]);
+    }, [name, selectedItems, setCustomValue]);
+
+    const t = useTranslations("instructions");
+    const locale = useLocale();
+
+    const Label = ({ name, flag }: { name: string; flag: string | any }) => {
+        return (
+            <div className=" text-sm flex gap-2 justify-start items-center">
+                {flag !== "" && (
+                    <CountryFlag
+                        countryCode={flag}
+                        svg
+                        style={{ width: "18px", height: "18px" }}
+                    />
+                )}
+                <span>{name}</span>
+            </div>
+        );
+    };
+    return (
+        <div className=" w-full flex justify-center items-start">
+            <div className="w-[700px] rounded-lg grid grid-cols-1 text-neutral-500 dark:text-neutral-300">
+                <div className="w-full">
+                    <h2 className=" font-bold text-xl">
+                        {t("choose countries")}
+                    </h2>
+                    <p>{t("choose countries description")}</p>
+                </div>
+                <div className=" my-6  w-full grid grid-cols-4 gap-3">
+                    {countries.map((item) => (
+                        <SelectItem
+                            key={item.id}
+                            label={
+                                (
+                                    <Label
+                                        name={
+                                            locale === "en"
+                                                ? item.name.en
+                                                : item.name.ar
+                                        }
+                                        flag={item?.flag || ""}
+                                    />
+                                ) as any
+                            }
+                            value={item}
+                            selected={selectedItems.includes(item)}
+                            onClick={() => handleSelect(item)}
+                        />
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+};
