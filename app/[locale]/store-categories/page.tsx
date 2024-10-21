@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Heading from "@/app/components/headings/Heading";
 import { useLocale, useTranslations } from "next-intl";
-import Label from "@/app/components/stores/Label";
 import StoreFilter from "@/app/components/filter/StoreFilter";
 import Taps from "@/app/components/buttons/Taps";
 import StoreTable from "@/app/components/table/StoreTable";
@@ -37,7 +36,7 @@ const CategoryPage = () => {
 
             <StoreFilter />
 
-            <StoreTable />
+            <StoreTable stores={[]}/>
         </div>
     );
 };

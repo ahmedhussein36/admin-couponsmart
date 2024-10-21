@@ -38,7 +38,7 @@ const PostsPage = () => {
 
             <StoreFilter />
 
-            <StoreTable />
+            <StoreTable stores={[]} />
         </div>
     );
 };

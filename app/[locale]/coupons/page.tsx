@@ -1,7 +1,6 @@
 import React from "react";
 import Heading from "@/app/components/headings/Heading";
 import Label from "@/app/components/stores/Label";
-import StoreFilter from "@/app/components/filter/StoreFilter";
 import Taps from "@/app/components/buttons/Taps";
 import AddNewButton from "@/app/components/buttons/AddNewButton";
 import CouponTable from "@/app/components/coupons/CouponTable";
