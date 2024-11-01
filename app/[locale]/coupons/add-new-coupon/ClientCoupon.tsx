@@ -119,8 +119,7 @@ const ClientCoupon = ({
             <CategorySelect
                 name="categories"
                 categories={categories}
-                lang={methods.getValues("locale")}
-            />
+                lang={methods.getValues("locale")} categoryIds={[]}            />
         );
     }
 
