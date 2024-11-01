@@ -10,13 +10,12 @@ interface CategorySelectProps {
     name: string;
     lang: string;
     categories: any[];
-    categoryIds: string[];
+    categoryIds?: string[];
 }
 
 const CategorySelect = ({
     name,
     categories,
-    categoryIds,
     lang,
 }: CategorySelectProps) => {
     const [selectedItems, setSelectedItems] = useState<any[]>([]);

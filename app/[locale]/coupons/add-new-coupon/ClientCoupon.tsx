@@ -99,7 +99,9 @@ const ClientCoupon = ({
         setCustomValue("locale", locale);
     };
 
-    let content = <SelectLangauge coupon value={locale} onLocale={onLangaugeChange} />;
+    let content = (
+        <SelectLangauge coupon value={locale} onLocale={onLangaugeChange} />
+    );
 
     if (step === STEPS.COUNTRY) {
         content = (
@@ -119,7 +121,8 @@ const ClientCoupon = ({
             <CategorySelect
                 name="categories"
                 categories={categories}
-                lang={methods.getValues("locale")} categoryIds={[]}            />
+                lang={methods.getValues("locale")}
+            />
         );
     }
 
@@ -248,7 +251,7 @@ const ClientCoupon = ({
         setStep(STEPS.LANGAUGE);
         setSelected(false);
         methods.reset();
-        router.refresh(); 
+        router.refresh();
     };
     return (
         <FormProvider {...methods}>
