@@ -3,11 +3,10 @@ import { getMessages } from "next-intl/server";
 import "./globals.css";
 import { MainSidebar } from "@/app/components/navMenu/MainSidebar";
 import Header from "../components/header/Header";
-import { Providers } from "../hooks/providers";
 import getCurrentUser from "../actions/getCurrentUser";
-import { redirect, usePathname } from "next/navigation";
 import Login from "./login/Login";
 import ToasterProvider from "../providers/ToastProvider";
+import { ThemeProvider } from "../providers/ThemeProvider";
 
 export default async function LocaleLayout({
     children,
@@ -28,14 +27,19 @@ export default async function LocaleLayout({
                 <div className="z-10">
                     <ToasterProvider />
                 </div>
-                <Providers>
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                    disableTransitionOnChange
+                >
                     <NextIntlClientProvider messages={messages}>
                         {!auth ? (
                             <Login />
                         ) : (
                             <>
                                 <Header />
-                                <main className="bg-slate-100 dark:bg-gray-800 grid w-full">
+                                <main className=" grid w-full bg-slate-100 dark:bg-transparent">
                                     <div className=" col-span-1 w-[170px]">
                                         <MainSidebar />
                                     </div>
@@ -44,7 +48,7 @@ export default async function LocaleLayout({
                             </>
                         )}
                     </NextIntlClientProvider>
-                </Providers>
+                </ThemeProvider>
             </body>
         </html>
     );

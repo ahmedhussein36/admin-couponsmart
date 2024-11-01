@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { FaEdit } from "react-icons/fa";
 import { FiTrash2 } from "react-icons/fi";
 import { toast } from "react-toastify";
@@ -15,6 +15,11 @@ import TableSkelton from "../TableSkelton";
 import { TableBody, TableCell, TableHead, TableRow } from "../table/Table";
 import CountryFlag from "react-country-flag";
 import NoData from "../NoData";
+import Status from "./Status";
+import { SelectStore } from "./select/SelectStore";
+import { countries } from "@/app/utils/data";
+import { SelectCountry } from "./select/SelectCountry";
+import { SelectType } from "./select/SelectType";
 
 interface TableProps {
     coupons: any[];
@@ -30,6 +35,7 @@ const CouponTable = ({ coupons }: TableProps) => {
         { label: t("countries") },
         { label: t("language") },
         { label: t("code") },
+        { label: t("status") },
         { label: t("actions") },
     ];
 
@@ -41,6 +47,7 @@ const CouponTable = ({ coupons }: TableProps) => {
 
     const router = useRouter();
     const confirm = useConfirm();
+    const locale = useLocale()
 
     function onDelete(id: string) {
         setIsLoading(true);
@@ -90,21 +97,30 @@ const CouponTable = ({ coupons }: TableProps) => {
         setFilteredData(filteredCoupons);
     }, [filteredCoupons]);
 
+    const stores = filteredCoupons.map((item) => {
+        return item.Store.name;
+    });
+
     return (
         <div>
             <Confirm
                 isLoading={isLoading}
                 onDelete={() => onDelete(couponId)}
             />
-            <div className="w-full grid grid-cols-3 justify-items-end items-end">
+            <div className="w-full grid grid-cols-6 justify-items-end items-end">
                 <SearchInput
                     Placeholder={t("search")}
                     onChange={handleSearch}
                 />
-                <LangaugeTaps languageChange={languageChange} />
+                <SelectStore list={stores} label={"By Store"} />
+                <SelectCountry list={countries} label={"By country"} />
+                <SelectType label={"By Type"} />
+                <div className=" col-span-2">
+                    <LangaugeTaps languageChange={languageChange} />
+                </div>
             </div>
             {filteredData.length ? (
-                <table className="mt-4 border-collapse overflow-hidden rounded-lg table w-full bg-white dark:bg-transparent">
+                <table className="mt-4 border-collapse overflow-hidden rounded-lg table w-full bg-white dark:bg-gray-700/50">
                     <TableHead>
                         <TableRow>
                             {head.map((item, index) => (
@@ -123,7 +139,7 @@ const CouponTable = ({ coupons }: TableProps) => {
                                         {item.countries.map((item: any) => (
                                             <CountryFlag
                                                 title={item.value}
-                                                className="mx-2"
+                                                className="mx-1"
                                                 key={item.id}
                                                 countryCode={item.flag}
                                                 svg
@@ -135,7 +151,10 @@ const CouponTable = ({ coupons }: TableProps) => {
                                         ))}
                                     </TableCell>
                                     <TableCell>{item.locale}</TableCell>
-                                    <TableCell>{item.auther.name}</TableCell>
+                                    <TableCell>{item.code}</TableCell>
+                                    <TableCell>
+                                        <Status status={item.status} />
+                                    </TableCell>
                                     <TableCell>
                                         <div className=" flex justify-start items-center gap-3">
                                             <div

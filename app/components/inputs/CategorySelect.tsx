@@ -10,9 +10,15 @@ interface CategorySelectProps {
     name: string;
     lang: string;
     categories: any[];
+    categoryIds: string[];
 }
 
-const CategorySelect = ({ name, categories, lang }: CategorySelectProps) => {
+const CategorySelect = ({
+    name,
+    categories,
+    categoryIds,
+    lang,
+}: CategorySelectProps) => {
     const [selectedItems, setSelectedItems] = useState<any[]>([]);
     const [categoryName, setCategoryName] = useState("");
     const [filteredData, setFilteredData] = useState(categories);
@@ -67,7 +73,7 @@ const CategorySelect = ({ name, categories, lang }: CategorySelectProps) => {
                             Placeholder="Search category"
                             onChange={handleSearch}
                         />
-                        <div className="my-6 w-full grid grid-cols-3 gap-3 justify-items-start">
+                        <div className="my-6 w-full grid  grid-cols-[auto-fill] gap-3 justify-items-start">
                             {filteredData.map((item, index) => (
                                 <SelectItem
                                     key={item.id}

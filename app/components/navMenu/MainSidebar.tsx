@@ -31,18 +31,6 @@ export function MainSidebar() {
                 ${!isCollaps ? "w-[160px]" : "w-[80px]"}
             `}
         >
-            <div
-                className={`relative flex justify-center items-center ${
-                    isCollaps ? "w-[40px]" : "w-[120px]"
-                }   h-[40px]`}
-            >
-                <Image
-                    src={isCollaps ? logoIcon : logoSrc}
-                    alt="logo"
-                    fill priority sizes=" "
-                    className=" object-cover"
-                />
-            </div>
             <div className=" flex justify-start px-2 items-center w-full mt-1 mb-2">
                 <CollapsButton
                     toggleOpen={() =>

@@ -278,7 +278,8 @@
         "language": "Language",
         "all languages": "All languages",
         "arabic": "Arabic",
-        "english": "English"
+        "english": "English",
+        "status": "Status"
     },
     "NotFoundPage": {
         "title": " 404 | This page could not be found. ",

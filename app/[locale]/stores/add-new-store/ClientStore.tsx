@@ -44,6 +44,7 @@ const ClientStore = ({ categories }: ClientStoreParams) => {
             title: "",
             name: "",
             slug: "",
+            affiliateUrl: "",
             description: "",
             image: "",
             translateLink: "",
@@ -213,4 +214,3 @@ const ClientStore = ({ categories }: ClientStoreParams) => {
 };
 
 export default ClientStore;
- 

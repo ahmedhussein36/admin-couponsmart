@@ -35,6 +35,7 @@ model Store {
   title           String
   name            String          @unique
   slug            String          @unique
+  affiliateUrl    String?
   description     String
   image           String
   coverImage      String

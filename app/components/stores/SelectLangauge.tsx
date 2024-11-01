@@ -5,7 +5,7 @@ import SelectItem from "../inputs/SelectItem";
 import { useTranslations } from "next-intl";
 import Input from "../inputs/Input";
 
-interface langProps {
+interface langProps { 
     onLocale: (value: string) => void;
     value?: string;
     coupon?: boolean

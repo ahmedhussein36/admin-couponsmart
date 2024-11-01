@@ -2,7 +2,28 @@ import { NextResponse } from "next/server";
 import prisma from "@/app/libs/prismadb";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 
-export async function POST(request: Request) {
+interface IParams {
+    storeId?: string;
+}
+
+export async function DELETE(
+    request: Request,
+    { params }: { params: IParams }
+) {
+    const { storeId } = params;
+    if (!storeId || typeof storeId !== "string") {
+        throw new Error("Invalid ID");
+    }
+    const store = await prisma.store.delete({
+        where: {
+            id: storeId,
+        },
+    });
+
+    return NextResponse.json(store);
+}
+
+export async function PUT(request: Request, { params }: { params: IParams }) {
     const currentUser = await getCurrentUser();
     if (!currentUser) {
         return new Response("Unauthorized", { status: 401 });
@@ -14,7 +35,6 @@ export async function POST(request: Request) {
         title,
         name,
         categories,
-        slug,
         affiliateUrl,
         description,
         image,
@@ -36,13 +56,26 @@ export async function POST(request: Request) {
         isTopRated,
     } = body;
 
-    const store = await prisma.store.create({
+    Object.keys(body).forEach((value: any) => {
+        if (!body[value]) {
+            NextResponse.error();
+        }
+    });
+
+    const { storeId } = params;
+    if (!storeId || typeof storeId !== "string") {
+        throw new Error("Invalid ID");
+    }
+    // Update the store's scalar fields
+    const store = await prisma.store.update({
+        where: {
+            id: storeId,
+        },
         data: {
             locale,
             status,
             title,
             name,
-            slug,
             affiliateUrl,
             description,
             image,
@@ -62,13 +95,20 @@ export async function POST(request: Request) {
             isFooter,
             isAddHome,
             isTopRated,
+        },
+    });
+
+    // Connect store categories separately
+    await prisma.store.update({
+        where: {
+            id: storeId,
+        },
+        data: {
             storeCategories: {
-                connect:
-                    categories.map((category: { id: string }) => ({
-                        id: category.id,
-                    })) || [],
+                connect: categories.map((category: { id: string }) => ({
+                    id: category.id,
+                })),
             },
-            userId: currentUser.id,
         },
     });
 

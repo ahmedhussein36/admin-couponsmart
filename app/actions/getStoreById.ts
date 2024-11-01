@@ -1,10 +1,10 @@
 import prisma from "@/app/libs/prismadb";
 
-interface IParams {
+export interface StoreParam {
     storeId?: string;
 }
 
-export default async function getStoreById(params: IParams) {
+export default async function getStoreById(params: StoreParam) {
     try {
         const { storeId } = params;
 
@@ -29,7 +29,7 @@ export default async function getStoreById(params: IParams) {
 
         const safeStore = {
             ...store,
-            createdAt: store?.createdAt?.toString(),
+            createdAt: store?.createdAt?.toLocaleString(),
         };
 
         return safeStore;

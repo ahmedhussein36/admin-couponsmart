@@ -277,7 +277,9 @@
         "english": "الإنجليزية",
         "countries": "الدول",
         "code": "الكود",
-        "store": "المتجر"
+        "store": "المتجر",
+        "status": "الحالة"
+
     },
     "NotFoundPage": {
         "title": " 404 الصفحة غير موجوده ",

@@ -1,0 +1,149 @@
+"use client";
+import React, { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import StoreDetails from "@/app/components/stores/StoreDetails";
+import { useCreateStore } from "@/app/hooks/useCreateStore";
+import { toast } from "react-toastify";
+import { useTranslations } from "next-intl";
+import {
+    Button,
+    Heading,
+    SelectLangauge,
+    CategorySelect,
+    useGeneratedSlug,
+} from "@/app/utils/importData";
+import {
+    FieldValues,
+    FormProvider,
+    SubmitHandler,
+    useForm,
+    useWatch,
+} from "react-hook-form";
+import { SafeStore, SafeStoreCategory } from "@/app/types";
+import { BiSolidTraffic } from "react-icons/bi";
+import axios from "axios";
+import { useUpdate } from "@/app/hooks/useUpdate";
+
+interface ClientStoreParams {
+    store: SafeStore;
+    allCategories: SafeStoreCategory[];
+}
+
+const ClientStoreID = ({ store, allCategories }: ClientStoreParams) => {
+    const t = useTranslations();
+    const router = useRouter();
+    const { updateData, error, loading } = useUpdate();
+
+    const methods = useForm<FieldValues>({
+        defaultValues: {
+            locale: store.locale,
+            status: store.status,
+            title: store.title,
+            name: store.name,
+            slug: store.slug,
+            affiliateUrl: store?.affiliateUrl,
+            description: store.description,
+            image: store.image,
+            translateLink: store.translateLink,
+            coverImage: store.coverImage,
+            categories: store?.categoryIds,
+            rating: store.rating,
+            votes: store.votes,
+            metaTitle: store.metaTitle,
+            metaDescription: store.metaDescription,
+            canonicalUrl: store.canonicalUrl,
+            ogImage: store.ogImage,
+            ogTitle: store.ogTitle,
+            ogDescription: store.ogDescription,
+            ogUrl: store.ogUrl,
+            isRecommended: store.isRecommended,
+            isFeatured: store.isFeatured,
+            isFooter: store.isFooter,
+            isAddHome: store.isAddHome,
+            isTopRated: store.isTopRated,
+        },
+    });
+
+    const setCustomValue = useCallback(
+        (name: string, value: any) => {
+            methods.setValue(name, value, {
+                shouldDirty: true,
+                shouldTouch: true,
+                shouldValidate: true,
+            });
+        },
+        [methods]
+    );
+
+    const { locale, categories } = useWatch(methods);
+    const onLangaugeChange = (locale: string) => {
+        setCustomValue("locale", locale);
+    };
+
+    const currentCategories = allCategories.filter((category) => {
+        return category.id === store.categoryIds.map((item) => item)
+        
+    })
+
+    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+        const api = `/api/stores/${store.id}`;
+        await toast.promise(updateData(api, data), {
+            pending: "Updating store...",
+            success: "Store updated successfully!",
+            error: {
+                render() {
+                    return error || "Error: Unable to update store.";
+                },
+            },
+        });
+        router.refresh();
+    };
+    return (
+        <FormProvider {...methods}>
+            <div className="relative w-full flex flex-col justify-start items-start gap-3 mb-20">
+                <div className=" flex justify-between items-center pb-4 w-full border-b dark:border-neutral-500">
+                    <Heading title={t("")} />
+                    <div className=" appeare flex justify-end items-center gap-3">
+                        <Button
+                            outline
+                            disabled={loading}
+                            onClick={() => {
+                                router.refresh();
+                                router.back();
+                            }}
+                        >
+                            {t("buttons.cancel")}
+                        </Button>
+                        <Button
+                            onClick={methods.handleSubmit(onSubmit)}
+                            disabled={loading}
+                            className=" bg-lime-500 hover:bg-lime-500/80"
+                        >
+                            {t("buttons.update")}
+                        </Button>
+                    </div>
+                </div>
+
+                <div className=" grid grid-cols-1 lg:grid-cols-4 w-full justify-items-start items-start gap-3">
+                    <div className=" col-span-3 w-full ">
+                        <StoreDetails />
+                    </div>
+                    <div className=" col-span-1 w-full">
+                        <SelectLangauge
+                            value={locale}
+                            onLocale={onLangaugeChange}
+                        />
+                        <CategorySelect
+                            name="categories"
+                            categories={allCategories as any}
+                            categoryIds={store.categoryIds}
+                            lang={methods.getValues("locale")}
+                        />
+                    </div>
+                </div>
+            </div>
+        </FormProvider>
+    );
+};
+
+export default ClientStoreID;

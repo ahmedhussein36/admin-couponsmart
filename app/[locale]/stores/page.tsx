@@ -13,7 +13,7 @@ const StoresPage = async ({ searchParams }: { searchParams: IParams }) => {
     const t = await getTranslations();
     const taps = [
         { id: "0", label: t("taps.all"), path: "" },
-        { id: "1", label: t("taps.published"), path: "?status=publised" },
+        { id: "1", label: t("taps.published"), path: "?status=published" },
         { id: "2", label: t("taps.draft"), path: "?status=draft" },
         { id: "3", label: t("taps.trash"), path: "?status=trashed" },
     ];

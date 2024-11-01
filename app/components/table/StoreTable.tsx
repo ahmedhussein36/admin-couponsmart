@@ -14,6 +14,7 @@ import SearchInput from "../inputs/SearchInput";
 import LangaugeTaps from "../buttons/LangaugeTaps";
 import TableSkelton from "../TableSkelton";
 import NoData from "../NoData";
+import Status from "../coupons/Status";
 
 interface TableProps {
     stores: any[];
@@ -29,6 +30,7 @@ const StoreTable = ({ stores }: TableProps) => {
         { label: t("coupons") },
         { label: t("language") },
         { label: t("author") },
+        { label: t("status") },
         { label: t("actions") },
     ];
 
@@ -44,7 +46,7 @@ const StoreTable = ({ stores }: TableProps) => {
     function onDelete(id: string) {
         setIsLoading(true);
         axios
-            .delete(`/api/register/${id}`)
+            .delete(`/api/store/${id}`)
             .then(() => {
                 confirm.onClose();
                 toast.success("Done : user deleted Successfully");
@@ -100,7 +102,7 @@ const StoreTable = ({ stores }: TableProps) => {
                 <LangaugeTaps languageChange={languageChange} />
             </div>
             {filteredData.length ? (
-                <table className="mt-4 border-collapse overflow-hidden rounded-lg table w-full bg-white dark:bg-transparent">
+                <table className="mt-4 border-collapse overflow-hidden rounded-lg table w-full bg-white dark:bg-gray-700/50">
                     <TableHead>
                         <TableRow>
                             {head.map((item, index) => (
@@ -120,14 +122,18 @@ const StoreTable = ({ stores }: TableProps) => {
                                 <TableCell>{item.locale}</TableCell>
                                 <TableCell>{item.auther.name}</TableCell>
                                 <TableCell>
-                                    <div className=" flex justify-start items-center gap-3">
+                                    <Status status={item.status} />
+                                </TableCell>
+                                <TableCell>
+                                    <div className=" flex justify-start items-center gap-1">
                                         <div
                                             onClick={() => {
-                                                router.push(`users/${item.id}`);
+                                                router.push(`stores/${item.id}`);
                                             }}
                                             title="Edit"
-                                            className="rounded border- text-blue-500
-                                                        cursor-pointer  p-1 transition-all
+                                            className="rounded text-blue-500 dark:border-0 dark:bg-white/10 
+                                                        border border-gray-300
+                                                        cursor-pointer w-7 h-7 transition-all
                                                         flex justify-center items-center"
                                         >
                                             {/* Edit  */}
@@ -139,9 +145,10 @@ const StoreTable = ({ stores }: TableProps) => {
                                                 confirm.onOpen();
                                             }}
                                             title="Delete"
-                                            className="rounded border- text-red-500 hover:bg-red-50
-                                                                p-1 flex justify-center cursor-pointer
-                                                                items-center"
+                                            className="rounded text-red-500 dark:bg-white/10 
+                                                        border border-gray-300 dark:border-0
+                                                        w-7 h-7 flex justify-center cursor-pointer
+                                                        items-center"
                                         >
                                             {/* Remove{" "} */}
                                             <FiTrash2 size={16} />
@@ -151,9 +158,10 @@ const StoreTable = ({ stores }: TableProps) => {
                                                 router.push(`users/${item.id}`);
                                             }}
                                             title="Preview"
-                                            className="rounded text-purple-500
-                                                                p-1 flex justify-center cursor-pointer
-                                                                items-center"
+                                            className="rounded text-purple-500  dark:bg-white/10 
+                                                        border border-gray-300 dark:border-0
+                                                        w-7 h-7 flex justify-center cursor-pointer
+                                                        items-center"
                                         >
                                             {/* Remove{" "} */}
                                             <RiShareBoxFill size={16} />

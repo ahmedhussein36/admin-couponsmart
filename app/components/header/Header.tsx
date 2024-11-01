@@ -4,6 +4,7 @@ import { GrNotification } from "react-icons/gr";
 import LangSwitcher from "./LangSwitcher";
 import ThemeToggle from "./ThemeToggle";
 import UserProfile from "../profile/UserProfile";
+import { ModeToggle } from "./ModeToggle";
 
 export const HeaderItem = ({ children }: { children: ReactNode }) => {
     return (
@@ -27,7 +28,7 @@ const Header = () => {
         >
             <div className="flex justify-between px-8 items-center gap-3 text-neutral-200 duration-300">
                 <HeaderItem>
-                    <ThemeToggle />
+                    <ModeToggle />
                 </HeaderItem>
                 <HeaderItem>
                     <GrNotification size={18} />
