@@ -80,11 +80,6 @@ const ClientStoreID = ({ store, allCategories }: ClientStoreParams) => {
         setCustomValue("locale", locale);
     };
 
-    const currentCategories = allCategories.filter((category) => {
-        return category.id === store.categoryIds.map((item) => item)
-        
-    })
-
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const api = `/api/stores/${store.id}`;
         await toast.promise(updateData(api, data), {
