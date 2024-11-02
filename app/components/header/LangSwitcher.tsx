@@ -18,7 +18,7 @@ export default function LangSwitcher() {
     const onSelectChange = () => {
         localActive === "en" ? "ar" : "en";
         startTransition(() => {
-            router.push(`/${nextLocale}/${segment.join("/")}/`);
+            router.push(`/${nextLocale}/${segment?.join("/")}/`);
         });
     };
     return (
