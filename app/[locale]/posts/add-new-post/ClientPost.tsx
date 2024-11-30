@@ -113,7 +113,8 @@ const ClientPost = ({ PostCategories }: { PostCategories: any[] }) => {
     const onNext = () => {
         setStep((value) => value + 1);
     };
-
+    
+//callback funtion to get the locale value
     const onLangaugeChange = (locale: string) => {
         setCustomValue("locale", locale);
     };
