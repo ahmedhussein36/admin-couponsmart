@@ -8,7 +8,7 @@ type Category = {
 };
 
 interface SelectProps {
-    label: string;
+    label: ReactElement | ReactNode | string | any;
     value: ReactElement | ReactNode | string | any;
     selected: boolean;
     onClick: (value: Category) => void;
@@ -22,7 +22,7 @@ const SelectItem = ({ selected, value, onClick, label }: SelectProps) => {
                         ${
                             selected
                                 ? " border border-sky-400 dark:border-sky-400"
-                                :"border border-neutral-500"
+                                : "border border-neutral-500"
                         }
                         flex justify-between 
                         items-center p-2 

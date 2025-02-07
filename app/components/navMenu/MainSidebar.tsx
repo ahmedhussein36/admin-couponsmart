@@ -4,21 +4,17 @@ import CollapsButton from "./CollapsButton";
 import NavLink from "./NavLink";
 import { useNavMenuList } from "@/app/utils/useNavMenuList";
 import { useSelectedLayoutSegment } from "next/navigation";
-import { useLocale } from "next-intl";
-import Image from "next/image";
-import logoSrc from "./logo.png";
-import logoIcon from "./icon.png";
 
 export function MainSidebar() {
     const [isCollaps, setisCollaps] = useState(false);
     const navMenu = useNavMenuList();
     const segment = useSelectedLayoutSegment();
-    const locale = useLocale();
 
     const activeNavLink = (path: string | null) => {
         let route;
         path === "/" ? (route = null) : (route = path);
         if (segment === route) return true;
+        return false;
     };
 
     return (
@@ -46,7 +42,7 @@ export function MainSidebar() {
                     <NavLink
                         key={item.id}
                         label={item.label}
-                        path={`${locale}/${item.path}`}
+                        path={`/${item.path}`}
                         icon={item.icon}
                         isActive={activeNavLink(item.path) as boolean}
                         isCollaps={isCollaps}

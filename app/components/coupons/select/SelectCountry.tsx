@@ -20,8 +20,10 @@ import {
 } from "@/components/ui/popover";
 import ReactCountryFlag from "react-country-flag";
 import { useLocale } from "next-intl";
+import { useRouter } from "@/i18n/routing";
 
 interface Props {
+    getCountry: (value: string) => void;
     list?: {
         id: number;
         name: {
@@ -34,10 +36,12 @@ interface Props {
     label?: string;
 }
 
-export function SelectCountry({ list, label }: Props) {
+export function SelectCountry({ list, label, getCountry }: Props) {
     const [open, setOpen] = React.useState(false);
     const [value, setValue] = React.useState("");
     const locale = useLocale();
+
+    const router = useRouter();
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
@@ -71,6 +75,11 @@ export function SelectCountry({ list, label }: Props) {
                                                 : currentValue
                                         );
                                         setOpen(false);
+                                        getCountry(
+                                            currentValue === value
+                                                ? ""
+                                                : currentValue
+                                        );
                                     }}
                                 >
                                     <Check
@@ -92,7 +101,9 @@ export function SelectCountry({ list, label }: Props) {
                                             }}
                                         />
                                         <span className="ltr:ml-2 rtl:mr-2">
-                                            {locale ==="en"?item.name.en : item.name.ar}
+                                            {locale === "en"
+                                                ? item.name.en
+                                                : item.name.ar}
                                         </span>
                                     </div>
                                 </CommandItem>

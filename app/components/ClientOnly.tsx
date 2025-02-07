@@ -9,11 +9,9 @@ interface ClientOnlyProps {
 
 const ClientOnly: React.FC<ClientOnlyProps> = ({ children }) => {
     const [hasMounted, setHasMounted] = useState(false);
-    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         setHasMounted(true);
-        setLoading(true);
     }, []);
 
     if (!hasMounted) return <TableSkelton />;

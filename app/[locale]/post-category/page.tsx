@@ -1,13 +1,10 @@
 import React from "react";
 import CategoryPostClient from "./CategoryPostClient";
-import getPostCategory, { IParams } from "@/app/actions/getPostCategory";
+import getPostCategory from "@/app/actions/getPostCategory";
 
-interface Iparams {
-    searchParams: IParams;
-}
 
-const PostCategory = async ({ searchParams }: Iparams) => {
-    const PostCategory = await getPostCategory(searchParams);
+const PostCategory = async () => {
+    const PostCategory = await getPostCategory();
     return (
         <div>
             <title>Posts: Categories</title>

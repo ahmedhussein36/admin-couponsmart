@@ -33,10 +33,16 @@ export default async function getStores(params: IParams) {
             select: {
                 id: true,
                 name: true,
+                image: true,
                 locale: true,
                 title: true,
                 status: true,
-                auther: true,
+                author: {
+                    select: {
+                        id: true,
+                        name: true,
+                    },
+                },
                 coupons: {
                     select: {
                         id: true,
@@ -51,7 +57,7 @@ export default async function getStores(params: IParams) {
             },
 
             orderBy: {
-                createdAt: "asc",
+                createdAt: "desc",
             },
         });
 
@@ -64,3 +70,12 @@ export default async function getStores(params: IParams) {
         throw new Error(error);
     }
 }
+
+export const getAllStores = async () => {
+    const stores = await prisma.store.findMany();
+
+    const allStores = stores.map((store) => {
+        return store.name;
+    });
+    return allStores;
+};

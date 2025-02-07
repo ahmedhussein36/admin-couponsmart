@@ -19,7 +19,15 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover";
 
-export function SelectStore({ list, label }: { list?: any[]; label?: string }) {
+export function SelectStore({
+    list,
+    label,
+    getStore,
+}: {
+    list?: any[];
+    label?: string;
+    getStore: (value: string) => void;
+}) {
     const [open, setOpen] = React.useState(false);
     const [value, setValue] = React.useState("");
 
@@ -30,7 +38,7 @@ export function SelectStore({ list, label }: { list?: any[]; label?: string }) {
                     variant={"outline"}
                     role="combobox"
                     aria-expanded={open}
-                    className="w-[200px] justify-between hover:opacity-1"
+                    className="w-[200px] justify-between "
                 >
                     {value
                         ? list?.find((item) => item === value)
@@ -55,6 +63,11 @@ export function SelectStore({ list, label }: { list?: any[]; label?: string }) {
                                                 : currentValue
                                         );
                                         setOpen(false);
+                                        getStore(
+                                            currentValue === value
+                                                ? ""
+                                                : currentValue
+                                        );
                                     }}
                                 >
                                     <Check

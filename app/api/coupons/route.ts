@@ -34,7 +34,7 @@ export async function POST(request: Request) {
             image,
             locale,
             code,
-            discount,
+            discount: parseInt(discount),
             countries,
             type,
             views: parseInt(views),
@@ -44,7 +44,7 @@ export async function POST(request: Request) {
             storeId,
             StoreCategory: {
                 connect: categories?.map((category: { id: string }) => ({
-                    id: category.id,
+                    id: category,
                 })),
             },
             userId: currentUser.id,

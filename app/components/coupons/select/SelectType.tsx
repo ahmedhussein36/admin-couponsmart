@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Check, ChevronDown, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronDown } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -18,26 +18,32 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover";
+import { useRouter } from "@/i18n/routing";
 
-
-const types=  [
-        {
+const types = [
+    {
         id: 1,
-        value:"coupon",
-        name: 'Coupon'
+        value: "coupon",
+        name: "Coupon",
     },
     {
         id: 2,
         value: "deal",
         name: "Deal",
-    }
-    ]
+    },
+];
 
-
-
-export function SelectType({ label }: { label?: string }) {
+export function SelectType({
+    label,
+    getType,
+}: {
+    label?: string;
+    getType: (value: string) => void;
+}) {
     const [open, setOpen] = React.useState(false);
     const [value, setValue] = React.useState("");
+
+    const router = useRouter();
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
@@ -71,6 +77,11 @@ export function SelectType({ label }: { label?: string }) {
                                                 : currentValue
                                         );
                                         setOpen(false);
+                                        getType(
+                                            currentValue === value
+                                                ? ""
+                                                : currentValue
+                                        );
                                     }}
                                 >
                                     <Check

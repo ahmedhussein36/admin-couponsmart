@@ -1,16 +1,13 @@
 import React from "react";
 import ClientPost from "./ClientPost";
-import getPostCategory, { IParams } from "@/app/actions/getPostCategory";
-interface Iparams {
-    searchParams: IParams;
-}
+import getPostCategory from "@/app/actions/getPostCategory";
 
-const NewPostPage = async ({ searchParams }: Iparams) => {
-    const PostCategory = await getPostCategory(searchParams);
+const NewPostPage = async () => {
+    const PostCategory = await getPostCategory();
     return (
         <div className="w-full">
             <title>Posts: Add new post</title>
-            <ClientPost PostCategories={PostCategory}/>
+            <ClientPost PostCategories={PostCategory} />
         </div>
     );
 };

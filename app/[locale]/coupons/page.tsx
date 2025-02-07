@@ -7,9 +7,11 @@ import CouponTable from "@/app/components/coupons/CouponTable";
 import { getTranslations } from "next-intl/server";
 import getCoupons, { IParams } from "@/app/actions/getcoupons";
 import ClientOnly from "@/app/components/ClientOnly";
+import { getAllStores } from "@/app/actions/getStores";
 
 const CouponsPage = async ({ searchParams }: { searchParams: IParams }) => {
     const coupons = await getCoupons(searchParams);
+    const allStores = await getAllStores();
     const t = await getTranslations();
     const taps = [
         { id: "0", label: t("taps.all"), path: "" },
@@ -29,7 +31,7 @@ const CouponsPage = async ({ searchParams }: { searchParams: IParams }) => {
                             coupons.length
                         }`}
                     />
-                    <div className=" flex justify-start items-center gap-3">
+                    {/* <div className=" flex justify-start items-center gap-3">
                         <Label
                             label={`${t("stores.coupons")} : ${
                                 coupons.length
@@ -40,7 +42,7 @@ const CouponsPage = async ({ searchParams }: { searchParams: IParams }) => {
                             label={`5 ${t("stores.deals")}`}
                             color="bg-sky-300"
                         />
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className=" flex justify-end flex-grow">
@@ -54,7 +56,7 @@ const CouponsPage = async ({ searchParams }: { searchParams: IParams }) => {
             <Taps taps={taps} parent="coupons" />
             <div className="w-full">
                 <ClientOnly>
-                    <CouponTable coupons={coupons} />
+                    <CouponTable coupons={coupons} allStores={allStores} />
                 </ClientOnly>
             </div>
         </div>

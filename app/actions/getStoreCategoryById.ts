@@ -1,10 +1,10 @@
 import prisma from "@/app/libs/prismadb";
 
-interface IParams {
+export interface STParams {
     categoryId?: string;
 }
 
-export default async function getStoreCategoryById(params: IParams) {
+export default async function getStoreCategoryById(params: STParams) {
     try {
         const { categoryId } = params;
 

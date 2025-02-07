@@ -1,7 +1,5 @@
 import React, { Suspense } from "react";
 import Heading from "@/app/components/headings/Heading";
-import Label from "@/app/components/stores/Label";
-import StoreFilter from "@/app/components/filter/StoreFilter";
 import Taps from "@/app/components/buttons/Taps";
 import StoreTable from "@/app/components/table/StoreTable";
 import AddNewButton from "@/app/components/buttons/AddNewButton";
@@ -43,7 +41,7 @@ const StoresPage = async ({ searchParams }: { searchParams: IParams }) => {
 
             <div className="w-full">
                 <ClientOnly>
-                    <StoreTable stores={stores as any} />
+                    <StoreTable stores={stores as any} parent={"stores"} />
                 </ClientOnly>
             </div>
         </div>

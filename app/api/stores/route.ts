@@ -15,6 +15,7 @@ export async function POST(request: Request) {
         name,
         categories,
         slug,
+        faqs,
         affiliateUrl,
         description,
         image,
@@ -46,6 +47,7 @@ export async function POST(request: Request) {
             affiliateUrl,
             description,
             image,
+            faqs,
             translateLink,
             coverImage,
             rating: parseFloat(rating),
@@ -65,7 +67,7 @@ export async function POST(request: Request) {
             storeCategories: {
                 connect:
                     categories.map((category: { id: string }) => ({
-                        id: category.id,
+                        id: category,
                     })) || [],
             },
             userId: currentUser.id,

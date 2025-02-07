@@ -43,7 +43,7 @@ const CategoryPage = async ({ searchParams }: { searchParams: IParams }) => {
 
             <div className="w-full">
                 <ClientOnly>
-                    <StoreTable stores={categories as any} />
+                    <StoreTable stores={categories as any} parent={'store-categories'} />
                 </ClientOnly>
             </div>
         </div>

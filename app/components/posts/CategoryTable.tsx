@@ -2,9 +2,6 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import React from "react";
 import { BiEdit, BiTrash } from "react-icons/bi";
-import { LuDelete } from "react-icons/lu";
-import { MdDelete } from "react-icons/md";
-import { TbBrush } from "react-icons/tb";
 
 interface TableProps {
     categories: any[];
@@ -23,12 +20,12 @@ const CategoryTable = ({ categories }: TableProps) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {categories.map((category, index) => (
+                    {categories.map((category) => (
                         <tr
                             key={category.id}
                             className=" border-b dark:border-neutral-500 transition-all hover:bg-black/5 dark:hover:bg-black/15"
                         >
-                            <td>{category.title}</td>
+                            <td>{category.name}</td>
                             <td>
                                 <Link
                                     href={`posts?categoryId=${category.id}`}

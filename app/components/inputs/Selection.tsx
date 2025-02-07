@@ -14,15 +14,10 @@ const Selection = ({
     const { setValue } = useFormContext();
     const t = useTranslations();
     return (
-        <div className=" relative w-full">
+        <div className=" relative w-full flex flex-col justify-start items-start">
             <label
-                className= {`
-                    text-sm 
-                    rtl:right-2 
-                    -top-4 ltr:left-2 
-                    absolute 
-                    bg-white 
-                    dark:bg-gray-800 p-1 px-2 
+                className={`
+                    text-sm
                     text-neutral-500 dark:text-neutral-400 
                 `}
             >

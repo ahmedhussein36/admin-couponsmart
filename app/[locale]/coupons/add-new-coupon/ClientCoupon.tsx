@@ -40,6 +40,7 @@ const ClientCoupon = ({
 }) => {
     const [step, setStep] = useState(STEPS.LANGAUGE);
     const [selected, setSelected] = useState(false);
+    const [storeName, setStoreName] = useState("");
     const t = useTranslations();
     const router = useRouter();
     const { createMew, error, loading } = useCreateStore();
@@ -61,10 +62,6 @@ const ClientCoupon = ({
             usings: 0,
             likes: 0,
             views: 0,
-            affiliateUrl: "",
-            isFeatured: false,
-            isAddHome: false,
-            isRecommended: false,
         },
     });
 
@@ -99,19 +96,25 @@ const ClientCoupon = ({
         setCustomValue("locale", locale);
     };
 
+    const onSelect = (value: string) => {
+        setStoreName(value);
+    };
+
     let content = (
         <SelectLangauge coupon value={locale} onLocale={onLangaugeChange} />
     );
 
-    if (step === STEPS.COUNTRY) {
+    if (step === STEPS.COUNTRY) { 
         content = (
             <>
-                <CountrySelect name="countries" />
+              
                 <StoreSelect
                     stores={stores}
                     name={"storeId"}
                     lang={methods.getValues("locale")}
-                />
+                    onSelect={onSelect}
+                />  
+                <CountrySelect name="countries" />
             </>
         );
     }

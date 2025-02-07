@@ -28,11 +28,11 @@ export default async function getStoreCategories(params: IParams) {
             where: query,
             include: {
                 coupons: true,
-                auther: true,
+                author: true,
             },
 
             orderBy: {
-                createdAt: "asc",
+                createdAt: "desc",
             },
         });
 

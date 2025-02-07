@@ -8,13 +8,11 @@ const ToasterProvider = () => {
         <ToastContainer
             newestOnTop
             autoClose={8000}
-            theme={"dark"}
+            theme={"light"}
             position="bottom-right"
-            style={
-                {
-                    width:"380px",
-                }
-            }
+            style={{
+                width: "380px",
+            }}
         />
     );
 };

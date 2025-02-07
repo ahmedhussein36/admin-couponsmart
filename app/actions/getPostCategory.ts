@@ -1,35 +1,8 @@
 import prisma from "@/app/libs/prismadb";
 
-export interface IParams {
-    name?: string;
-    title?: string;
-    status?: string;
-    locale?: string;
-}
-
-export default async function getPostCategory(params: IParams) {
+export default async function getPostCategory() {
     try {
-        const { name, title, status, locale } = params;
-
-        let query: any = {};
-
-        if (name) {
-            query.name = {
-                contains: name,
-            };
-        }
-        if (title) {
-            query.title = title;
-        }
-        if (status) {
-            query.status = status;
-        }
-        if (locale) {
-            query.locale = locale;
-        }
-
         const storeCategories = await prisma.postCategory.findMany({
-            where: query,
             select: {
                 id: true,
                 name: true,
@@ -52,6 +25,32 @@ export default async function getPostCategory(params: IParams) {
         const safeCategory = storeCategories.map((safeCategory) => ({
             ...safeCategory,
             createdAt: safeCategory.createdAt.toISOString(),
+        }));
+
+        return safeCategory;
+    } catch (error: any) {
+        throw new Error(error);
+    }
+}
+
+export async function getPublishPostCategories() {
+    try {
+        const storeCategories = await prisma.postCategory.findMany({
+            where: {
+                status: "published",
+            },
+            select: {
+                id: true,
+                title: true,
+                locale: true,
+            },
+            orderBy: {
+                createdAt: "desc",
+            },
+        });
+
+        const safeCategory = storeCategories.map((safeCategory) => ({
+            ...safeCategory,
         }));
 
         return safeCategory;

@@ -3,56 +3,60 @@ import { useFormContext } from "react-hook-form";
 import { Faq } from "@/app/types";
 
 const useFAQManager = (name: string) => {
-    const [count, setCount] = useState(1);
+    const [faqId, setFaqId] = useState<number | null>(null);
     const [buttonLabel, setButtonLabel] = useState("save");
-    const [FaqId, setFaqId] = useState<number>();
     const { watch, setValue, getValues } = useFormContext();
-    const question: string = watch("question");
-    const answer: string = watch("answer");
-    const faqs: Faq[] = watch("faqs");
 
-    const handelSaveFAQ = () => {
-        setCount((count) => count + 1);
-        const newFAQ = {
-            id: count,
-            question: question,
-            answer: answer,
+    const question = watch("question", "");
+    const answer = watch("answer", "");
+    const faqs: Faq[] = watch(name);
+
+    const handleSaveFAQ = () => {
+        if (!question.trim() || !answer.trim()) return;
+
+        const newFAQ: Faq = {
+            id: Date.now(), // استخدام timestamp لتجنب التعارض
+            question,
+            answer,
         };
-        const currentValues = getValues(name) || [];
-        setValue(name, [...currentValues, newFAQ]);
-        setValue("question", "");
-        setValue("answer", "");
+
+        setValue(name, [...faqs, newFAQ]);
+        resetFields();
     };
 
-    const handelRemove = (id: number) => {
+    const handleRemove = (id: number) => {
         setValue(
             name,
-            getValues(name).filter((faq: Faq) => faq.id !== id)
+            faqs.filter((faq) => faq.id !== id)
         );
     };
 
     const handleEdit = (id: number) => {
+        const currentItem = faqs.find((faq) => faq.id === id);
+        if (!currentItem) return;
+
         setButtonLabel("update");
         setFaqId(id);
-        const currentItem = getValues(name).filter((faq: Faq) => faq.id === id);
-        setValue("question", currentItem[0].question);
-        setValue("answer", currentItem[0].answer);
+        setValue("question", currentItem.question);
+        setValue("answer", currentItem.answer);
     };
 
     const handleUpdate = () => {
-        const updatedFaq = {
-            id: FaqId,
-            question: question,
-            answer: answer,
-        };
-        const currentValues = getValues(name) || [];
-        const updatedValues = currentValues.map((faq: Faq) =>
-            faq.id === FaqId ? updatedFaq : faq
+        if (!faqId || !question.trim() || !answer.trim()) return;
+
+        const updatedFaqs = faqs.map((faq) =>
+            faq.id === faqId ? { ...faq, question, answer } : faq
         );
-        setValue(name, [...updatedValues]);
+
+        setValue(name, updatedFaqs);
+        resetFields();
+    };
+
+    const resetFields = () => {
         setValue("question", "");
         setValue("answer", "");
         setButtonLabel("save");
+        setFaqId(null);
     };
 
     return {
@@ -60,8 +64,8 @@ const useFAQManager = (name: string) => {
         question,
         answer,
         buttonLabel,
-        handelSaveFAQ,
-        handelRemove,
+        handleSaveFAQ,
+        handleRemove,
         handleEdit,
         handleUpdate,
     };

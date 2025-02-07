@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { FaEdit } from "react-icons/fa";
 import { FiTrash2 } from "react-icons/fi";
@@ -20,12 +20,15 @@ import { SelectStore } from "./select/SelectStore";
 import { countries } from "@/app/utils/data";
 import { SelectCountry } from "./select/SelectCountry";
 import { SelectType } from "./select/SelectType";
+import { Link } from "@/i18n/routing";
+import { getAllStores } from "@/app/actions/getStores";
 
 interface TableProps {
     coupons: any[];
+    allStores: any[];
 }
 
-const CouponTable = ({ coupons }: TableProps) => {
+const CouponTable = ({ allStores, coupons }: TableProps) => {
     const t = useTranslations("table");
 
     const head = [
@@ -40,6 +43,9 @@ const CouponTable = ({ coupons }: TableProps) => {
     ];
 
     const [title, setTitle] = useState("");
+    const [couponCountry, setCouponCountry] = useState("");
+    const [couponType, setCouponType] = useState("");
+    const [couponStore, setCouponStore] = useState("");
     const [filteredData, setFilteredData] = useState(coupons);
     const [couponId, setCouponId] = useState("");
     const [lang, setLang] = useState("ar");
@@ -47,7 +53,6 @@ const CouponTable = ({ coupons }: TableProps) => {
 
     const router = useRouter();
     const confirm = useConfirm();
-    const locale = useLocale()
 
     function onDelete(id: string) {
         setIsLoading(true);
@@ -77,6 +82,17 @@ const CouponTable = ({ coupons }: TableProps) => {
         setLang(lang);
     };
 
+    const getcountry = (value: string) => {
+        setCouponCountry(value);
+    };
+
+    const getType = (value: string) => {
+        setCouponType(value);
+    };
+    const getStore = (value: string) => {
+        setCouponStore(value);
+    };
+
     const filteredCoupons = useMemo(() => {
         let data = coupons;
 
@@ -90,16 +106,33 @@ const CouponTable = ({ coupons }: TableProps) => {
             );
         }
 
+        if (couponStore !== "") {
+            data = data.filter((coupon) =>
+                coupon.Store.name
+                    .toLowerCase()
+                    .includes(couponStore.toLowerCase())
+            );
+        }
+
+        if (couponType !== "") {
+            data = data.filter((coupon) =>
+                coupon.type.toLowerCase().includes(couponType.toLowerCase())
+            );
+        }
+
+        if (couponCountry !== "") {
+            data = data.filter((coupon) =>
+                coupon.countries.some(
+                    (c: { value: string }) => c.value === couponCountry
+                )
+            );
+        }
         return data;
-    }, [coupons, lang, title]);
+    }, [couponCountry, couponStore, couponType, coupons, lang, title]);
 
     useEffect(() => {
         setFilteredData(filteredCoupons);
     }, [filteredCoupons]);
-
-    const stores = filteredCoupons.map((item) => {
-        return item.Store.name;
-    });
 
     return (
         <div>
@@ -112,9 +145,17 @@ const CouponTable = ({ coupons }: TableProps) => {
                     Placeholder={t("search")}
                     onChange={handleSearch}
                 />
-                <SelectStore list={stores} label={"By Store"} />
-                <SelectCountry list={countries} label={"By country"} />
-                <SelectType label={"By Type"} />
+                <SelectStore
+                    list={allStores}
+                    label={t("by_store")}
+                    getStore={getStore}
+                />
+                <SelectCountry
+                    list={countries}
+                    label={t("by_country")}
+                    getCountry={getcountry}
+                />
+                <SelectType label={t("by_type")} getType={getType} />
                 <div className=" col-span-2">
                     <LangaugeTaps languageChange={languageChange} />
                 </div>
@@ -157,12 +198,8 @@ const CouponTable = ({ coupons }: TableProps) => {
                                     </TableCell>
                                     <TableCell>
                                         <div className=" flex justify-start items-center gap-3">
-                                            <div
-                                                onClick={() => {
-                                                    router.push(
-                                                        `users/${item.id}`
-                                                    );
-                                                }}
+                                            <Link
+                                                href={`coupons/${item.id}`}
                                                 title="Edit"
                                                 className="rounded border- text-blue-500
                                                         cursor-pointer  p-1 transition-all
@@ -170,7 +207,7 @@ const CouponTable = ({ coupons }: TableProps) => {
                                             >
                                                 {/* Edit  */}
                                                 <FaEdit size={14} />
-                                            </div>
+                                            </Link>
                                             <div
                                                 onClick={() => {
                                                     setCouponId(item.id);

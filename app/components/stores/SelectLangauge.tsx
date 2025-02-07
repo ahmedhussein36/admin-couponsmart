@@ -30,13 +30,13 @@ const SelectLangauge = ({ onLocale, value , coupon}: langProps) => {
     };
 
     return (
-        <div className=" bg-white  dark:bg-transparent p-6 rounded-lg w-full flex justify-center items-start">
+        <div className=" bg-white  dark:bg-transparent p-6 rounded-lg w-full flex justify-start items-start">
             <div className="w-[500px] rounded-lg grid grid-cols-1 text-neutral-500 dark:text-neutral-300">
                 <div className="w-full">
                     <h2 className=" font-bold text-xl">
                         {t("instructions.choose langouge")}
                     </h2>
-                    <p>{t("instructions.choose langouge description")}</p>
+                    {/* <p>{t("instructions.choose langouge description")}</p> */}
                 </div>
                 <div className=" my-6 flex w-full flex-col justify-center items-center gap-3">
                     <SelectItem

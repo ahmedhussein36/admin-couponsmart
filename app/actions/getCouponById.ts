@@ -1,10 +1,10 @@
 import prisma from "@/app/libs/prismadb";
 
-interface IParams {
+export interface CouponParams {
     couponId?: string;
 }
 
-export default async function getCouponById(params: IParams) {
+export default async function getCouponById(params: CouponParams) {
     try {
         const { couponId } = params;
 

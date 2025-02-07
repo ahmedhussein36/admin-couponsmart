@@ -49,6 +49,7 @@ const ClientStore = ({ categories }: ClientStoreParams) => {
             image: "",
             translateLink: "",
             coverImage: "",
+            faqs: [],
             categories: [],
             rating: 0,
             votes: 0,

@@ -18,6 +18,7 @@ const StoreDetails = () => {
     const {
         image,
         title,
+        faqs,
         slug,
         description,
         metaTitle,

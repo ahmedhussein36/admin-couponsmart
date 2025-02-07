@@ -1,11 +1,16 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["tracing"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
+}
+
+type Faqs {
+  id       Int
+  question String
+  answer   String
 }
 
 model Admin {
@@ -36,6 +41,7 @@ model Store {
   name            String          @unique
   slug            String          @unique
   affiliateUrl    String?
+  faqs            Faqs[]
   description     String
   image           String
   coverImage      String
@@ -57,7 +63,7 @@ model Store {
   coupons         Coupon[]
   categoryIds     String[]        @default([]) @db.ObjectId
   storeCategories StoreCategory[] @relation(fields: [categoryIds], references: [id])
-  auther          Admin           @relation(fields: [userId], references: [id])
+  author          Admin           @relation(fields: [userId], references: [id], onDelete: NoAction)
   userId          String          @db.ObjectId
 }
 
@@ -71,7 +77,7 @@ model Coupon {
   description      String
   image            String
   code             String
-  discount         Float
+  discount         Int
   type             String
   countries        Json[]          @default([])
   views            Int
@@ -81,9 +87,9 @@ model Coupon {
   storeId          String          @db.ObjectId
   StoreCategory    StoreCategory[] @relation(fields: [storeCategoryIds], references: [id])
   storeCategoryIds String[]        @default([]) @db.ObjectId
-  auther           Admin           @relation(fields: [userId], references: [id])
+  author           Admin           @relation(fields: [userId], references: [id], onDelete: NoAction)
   userId           String          @db.ObjectId
-  Store            Store           @relation(fields: [storeId], references: [id])
+  Store            Store           @relation(fields: [storeId], references: [id], onDelete: NoAction)
 }
 
 model StoreCategory {
@@ -97,8 +103,8 @@ model StoreCategory {
   slug            String   @unique
   description     String
   image           String
+  faqs            Faqs[]
   coverImage      String?
-  rating          Float?
   translateLink   String?
   metaTitle       String
   metaDescription String
@@ -112,7 +118,7 @@ model StoreCategory {
   storeIds        String[] @db.ObjectId
   stores          Store[]  @relation(fields: [storeIds], references: [id])
   coupons         Coupon[] @relation(fields: [couponIds], references: [id])
-  auther          Admin    @relation(fields: [userId], references: [id])
+  author          Admin    @relation(fields: [userId], references: [id], onDelete: NoAction)
 }
 
 model Post {
@@ -125,6 +131,7 @@ model Post {
   slug            String         @unique
   description     String
   image           String
+  faqs            Faqs[]
   translateLink   String?
   metaTitle       String
   metaDescription String
@@ -138,7 +145,7 @@ model Post {
   isFooter        Boolean?
   isAddHome       Boolean?
   userId          String         @db.ObjectId
-  auther          Admin          @relation(fields: [userId], references: [id])
+  author          Admin          @relation(fields: [userId], references: [id], onDelete: NoAction)
   PostCategory    PostCategory[] @relation(fields: [postCategoryIds], references: [id])
   postCategoryIds String[]       @default([]) @db.ObjectId
   Tags            Tags[]         @relation(fields: [tagsIds], references: [id])

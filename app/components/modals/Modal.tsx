@@ -78,9 +78,9 @@ const Modal: React.FC<ModalProps> = ({
                 flex
                 overflow-x-hidden
                 overflow-y-hidden
-                fixed 
+                fixed transition-all
                 inset-0 
-                z-[999] transition-all duration-300 ease-out
+                z-[999] 
                 outline-none 
                 focus:outline-none
                 bg-slate-700/50 backdrop-blur-sm
@@ -92,7 +92,11 @@ const Modal: React.FC<ModalProps> = ({
                         w-full
                         md:w-4/6
                         lg:w-3/6
-                        ${confirm ? "xl:max-w-[480px] lg:max-w-[500px] md:max-w-[500px]" : " xl:w-2/5"}
+                        ${
+                            confirm
+                                ? "xl:max-w-[480px] lg:max-w-[500px] md:max-w-[500px]"
+                                : " xl:w-2/5"
+                        }
                         my-6
                         mx-auto 
                         h-auto 
@@ -103,12 +107,12 @@ const Modal: React.FC<ModalProps> = ({
                     {/*content*/}
                     <div
                         className={`
-                        duration-300 transition-all
+                        transition-all
                         h-full
                         ${
                             showModal
-                                ? "ease-out scale-[100%] opacity-100"
-                                : "ease-in scale-[90%] opacity-0"
+                                ? "scale-[100%] opacity-100"
+                                : "scale-[90%] opacity-0"
                         } 
                       `}
                     >

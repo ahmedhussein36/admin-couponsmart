@@ -26,18 +26,32 @@ export default async function getPosts(params: IParams) {
             where: query,
             select: {
                 id: true,
+                createdAt: true,
                 locale: true,
                 title: true,
                 status: true,
+                PostCategory: {
+                    select: {
+                        id: true,
+                        title: true,
+                    },
+                },
+                author: {
+                    select: {
+                        id: true,
+                        name: true,
+                    },
+                },
             },
 
             orderBy: {
-                createdAt: "asc",
+                createdAt: "desc",
             },
         });
 
         const safePost = posts.map((safePost) => ({
             ...safePost,
+            createdAt: safePost.createdAt.toISOString(),
         }));
 
         return safePost;

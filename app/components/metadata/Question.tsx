@@ -14,8 +14,8 @@ const Question = ({ name }: { name: string }) => {
         question,
         answer,
         buttonLabel,
-        handelSaveFAQ,
-        handelRemove,
+        handleSaveFAQ,
+        handleRemove,
         handleEdit,
         handleUpdate,
     } = useFAQManager(name);
@@ -39,7 +39,7 @@ const Question = ({ name }: { name: string }) => {
                             disabled={!question || !answer}
                             onClick={
                                 buttonLabel === "save"
-                                    ? handelSaveFAQ
+                                    ? handleSaveFAQ
                                     : handleUpdate
                             }
                         >
@@ -49,7 +49,7 @@ const Question = ({ name }: { name: string }) => {
                     <div className="col-span-1">
                         <FAQList
                             faqs={faqs}
-                            handleRemove={handelRemove}
+                            handleRemove={handleRemove}
                             handleEdit={handleEdit}
                         />
                     </div>

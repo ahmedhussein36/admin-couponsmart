@@ -146,6 +146,7 @@
         "edit coupon": "Edit Coupon",
         "edit store category": "Edit Store Category",
         "edit category": "Edit Category",
+        "edit post": "Edit Post",
         "edit user": "Edit User",
         "delete store": "Delete Store",
         "delete coupon": "Delete Coupon",
@@ -279,13 +280,18 @@
         "all languages": "All languages",
         "arabic": "Arabic",
         "english": "English",
-        "status": "Status"
+        "status": "Status",
+        "time": "Time",
+        "by_store": "By store",
+        "by_country": "By country",
+        "by_type": "By type"
     },
     "NotFoundPage": {
         "title": " 404 | This page could not be found. ",
         "decription": "Oops, It's seem that the page you are look for is not found"
     },
     "instructions": {
+        "selected countries": "Selected Countries",
         "choose store": "Choose Store",
         "choose store description": "Choose the coupon store",
         "choose langouge": "Choose langouge",
@@ -310,5 +316,13 @@
         "register": "Register",
         "welcome": "Welcome Back 👋",
         "login to your account": "Login to your account"
-    }
+    },
+    "store": "Store name",
+    "language": "Language",
+    "language_ar": "Arabic",
+    "language_en": "English",
+    "edit": "Edit",
+    "save": "Save",
+    "country": "Country",
+    "category": "Category"
 }

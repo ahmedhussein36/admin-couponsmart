@@ -1,8 +1,7 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback } from "react";
 import { useRouter } from "next/navigation";
 import StoreDetails from "@/app/components/stores/StoreDetails";
-import { useCreateStore } from "@/app/hooks/useCreateStore";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 import {
@@ -10,7 +9,6 @@ import {
     Heading,
     SelectLangauge,
     CategorySelect,
-    useGeneratedSlug,
 } from "@/app/utils/importData";
 import {
     FieldValues,
@@ -20,8 +18,6 @@ import {
     useWatch,
 } from "react-hook-form";
 import { SafeStore, SafeStoreCategory } from "@/app/types";
-import { BiSolidTraffic } from "react-icons/bi";
-import axios from "axios";
 import { useUpdate } from "@/app/hooks/useUpdate";
 
 interface ClientStoreParams {
@@ -44,6 +40,7 @@ const ClientStoreID = ({ store, allCategories }: ClientStoreParams) => {
             affiliateUrl: store?.affiliateUrl,
             description: store.description,
             image: store.image,
+            faqs: store?.faqs || [],
             translateLink: store.translateLink,
             coverImage: store.coverImage,
             categories: store?.categoryIds,
@@ -80,8 +77,9 @@ const ClientStoreID = ({ store, allCategories }: ClientStoreParams) => {
         setCustomValue("locale", locale);
     };
 
-    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const onSave: SubmitHandler<FieldValues> = async (data) => {
         const api = `/api/stores/${store.id}`;
+
         await toast.promise(updateData(api, data), {
             pending: "Updating store...",
             success: "Store updated successfully!",
@@ -93,11 +91,25 @@ const ClientStoreID = ({ store, allCategories }: ClientStoreParams) => {
         });
         router.refresh();
     };
+
+    const onsubmit: SubmitHandler<FieldValues> = async (data) => {
+        const api = `/api/stores/${store.id}`;
+        await toast.promise(updateData(api, data, "published"), {
+            pending: "Publishing store...",
+            success: "Store published successfully!",
+            error: {
+                render() {
+                    return error || "Error: Unable to publish this store.";
+                },
+            },
+        });
+        router.refresh();
+    };
     return (
         <FormProvider {...methods}>
             <div className="relative w-full flex flex-col justify-start items-start gap-3 mb-20">
                 <div className=" flex justify-between items-center pb-4 w-full border-b dark:border-neutral-500">
-                    <Heading title={t("")} />
+                    <Heading title={t("buttons.edit store")} />
                     <div className=" appeare flex justify-end items-center gap-3">
                         <Button
                             outline
@@ -110,20 +122,27 @@ const ClientStoreID = ({ store, allCategories }: ClientStoreParams) => {
                             {t("buttons.cancel")}
                         </Button>
                         <Button
-                            onClick={methods.handleSubmit(onSubmit)}
+                            onClick={methods.handleSubmit(onSave)}
                             disabled={loading}
-                            className=" bg-lime-500 hover:bg-lime-500/80"
+                            className=" bg-blue-500 hover:bg-blue-500/80"
                         >
                             {t("buttons.update")}
                         </Button>
+                        {store.status === "draft" && (
+                            <Button
+                                onClick={methods.handleSubmit(onsubmit)}
+                                disabled={loading}
+                                className=" bg-lime-500 hover:bg-lime-500/80"
+                            >
+                                {t("buttons.publish")}
+                            </Button>
+                        )}
                     </div>
                 </div>
 
                 <div className=" grid grid-cols-1 lg:grid-cols-4 w-full justify-items-start items-start gap-3">
                     <div className=" col-span-3 w-full ">
                         <StoreDetails />
-                    </div>
-                    <div className=" col-span-1 w-full">
                         <SelectLangauge
                             value={locale}
                             onLocale={onLangaugeChange}
@@ -131,7 +150,6 @@ const ClientStoreID = ({ store, allCategories }: ClientStoreParams) => {
                         <CategorySelect
                             name="categories"
                             categories={allCategories as any}
-                            categoryIds={store.categoryIds}
                             lang={methods.getValues("locale")}
                         />
                     </div>

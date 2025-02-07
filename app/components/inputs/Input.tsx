@@ -33,8 +33,7 @@ const Input = ({
                     {label && (
                         <label
                             htmlFor={name}
-                            className={`text-sm rtl:right-2 
-                                    -top-4 ltr:left-2 absolute bg-white dark:bg-gray-800 p-1 px-2
+                            className={`text-sm p-1 px-2
                                     ${
                                         error
                                             ? "text-red-500"

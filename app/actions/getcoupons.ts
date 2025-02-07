@@ -1,14 +1,18 @@
 import prisma from "@/app/libs/prismadb";
+import { countries } from "../utils/data";
 
 export interface IParams {
     title?: string;
     status?: string;
+    store?: string;
     locale?: string;
+    type?: string;
+    country?: string;
 }
 
 export default async function getCoupons(params: IParams) {
     try {
-        const { title, status, locale } = params;
+        const { title, status, locale, store, type, country } = params;
 
         let query: any = {};
 
@@ -18,8 +22,16 @@ export default async function getCoupons(params: IParams) {
         if (status) {
             query.status = status;
         }
+        if (type) {
+            query.type = type;
+        }
         if (locale) {
             query.locale = locale;
+        }
+        if (store) {
+            query.Store = {
+                name: store,
+            };
         }
 
         const coupons = await prisma.coupon.findMany({
@@ -31,10 +43,10 @@ export default async function getCoupons(params: IParams) {
                         name: true,
                     },
                 },
-                auther: true,
+                author: true,
             },
             orderBy: {
-                createdAt: "asc",
+                createdAt: "desc",
             },
         });
 

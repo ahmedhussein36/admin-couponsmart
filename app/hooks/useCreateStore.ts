@@ -1,16 +1,16 @@
-'use client'
-import { useState } from 'react';
-import axios from 'axios';
-import { useFormContext } from 'react-hook-form';
+"use client";
+import { useState } from "react";
+import axios from "axios";
+import { useFormContext } from "react-hook-form";
 
 export const useCreateStore = () => {
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
 
-    const createMew = async (apiUrl:string ,data: any, newStatus:string) => {
-        setLoading(true); 
-        setError(null); 
-        data.status=newStatus
+    const createMew = async (apiUrl: string, data: any, newStatus: string) => {
+        setLoading(true);
+        setError(null);
+        data.status = newStatus;
 
         try {
             const response = await axios.post(apiUrl, data);
@@ -23,10 +23,16 @@ export const useCreateStore = () => {
                 // Handle Axios-specific errors
                 if (err.response) {
                     // Server responded with a status other than 200 range
-                    setError(`Server Error: ${err.response.data.message || err.response.statusText}`);
+                    setError(
+                        `Server Error: ${
+                            err.response.data.message || err.response.statusText
+                        }`
+                    );
                 } else if (err.request) {
                     // Request was made but no response received
-                    setError('Network Error: No response received from server.');
+                    setError(
+                        "Network Error: No response received from server."
+                    );
                 } else {
                     // Something happened in setting up the request
                     setError(`Error: ${err.message}`);

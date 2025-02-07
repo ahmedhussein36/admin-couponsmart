@@ -7,6 +7,7 @@ import getCurrentUser from "../actions/getCurrentUser";
 import Login from "./login/Login";
 import ToasterProvider from "../providers/ToastProvider";
 import { ThemeProvider } from "../providers/ThemeProvider";
+import TopLoader from "../components/TopLoader";
 
 export default async function LocaleLayout({
     children,
@@ -19,14 +20,17 @@ export default async function LocaleLayout({
     const auth = await getCurrentUser();
 
     return (
-        <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"}>
+        <html
+            lang={locale}
+            dir={locale === "ar" ? "rtl" : "ltr"}
+            suppressHydrationWarning
+        >
             <head>
                 <title> Admin panal: Dashbourd</title>
             </head>
             <body>
-                <div className="z-10">
-                    <ToasterProvider />
-                </div>
+                <TopLoader />
+                <ToasterProvider />
                 <ThemeProvider
                     attribute="class"
                     defaultTheme="system"

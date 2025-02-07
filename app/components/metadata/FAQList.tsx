@@ -20,14 +20,14 @@ const FAQList = ({ faqs, handleRemove, handleEdit }: ListProps) => {
                     >
                         <div className=" flex justify-start items-center gap-2">
                             <span>
-                                {t("SEO.question")} {faq.id}
+                                {t("SEO.question")}
                             </span>
                             <span>:</span>
                             <h3 className=" font-semibold">{faq.question}</h3>
                         </div>
                         <div className=" flex justify-start items-center gap-2">
                             <span>
-                                {t("SEO.answer")} {faq.id}
+                                {t("SEO.answer")}
                             </span>
                             <span>:</span>
                             <p className=" text-sm">{faq.answer}</p>

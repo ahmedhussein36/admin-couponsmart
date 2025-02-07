@@ -9,9 +9,10 @@ interface StoreSelectProps {
     name: string;
     stores: any[];
     lang: string;
+    onSelect: (value: string) => void;
 }
 
-const StoreSelect = ({ name, stores, lang }: StoreSelectProps) => {
+const StoreSelect = ({ name, stores, lang, onSelect }: StoreSelectProps) => {
     const [storeName, setStoreName] = useState("");
     const [filteredData, setFilteredData] = useState(stores);
 
@@ -31,6 +32,7 @@ const StoreSelect = ({ name, stores, lang }: StoreSelectProps) => {
 
     const handleSelect = (store: any) => {
         setCustomValue(name, store.id);
+        onSelect(store.name);
     };
 
     /*======================= */
@@ -52,7 +54,7 @@ const StoreSelect = ({ name, stores, lang }: StoreSelectProps) => {
     };
 
     return (
-        <div className=" w-full flex justify-center items-center">
+        <div className=" w-full flex justify-start items-start">
             <div
                 className="w-full lg:w-[700px] rounded-lg grid grid-cols-1 justify-items-center
                         text-neutral-500 dark:text-neutral-300
@@ -69,7 +71,7 @@ const StoreSelect = ({ name, stores, lang }: StoreSelectProps) => {
                             Placeholder="Search store"
                             onChange={handleSearch}
                         />
-                        <div className="my-6 w-full grid grid-cols-3 gap-3 justify-items-start">
+                        <div className="my-6 w-full flex justify-start items-start flex-wrap gap-3 justify-items-start">
                             {filteredData.map((item, index) => (
                                 <SelectStore
                                     key={item.id}

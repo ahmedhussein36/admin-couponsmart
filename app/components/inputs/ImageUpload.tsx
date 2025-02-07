@@ -1,6 +1,6 @@
 "use client";
 
-import { CldUploadWidget } from "next-cloudinary";
+import { CldImage, CldUploadWidget } from "next-cloudinary";
 import Image from "next/image";
 import React, { useCallback } from "react";
 import { Controller, useFormContext } from "react-hook-form";
@@ -65,7 +65,7 @@ const ImageUpload = ({ name, social, label }: ImageUploadProps) => {
                                     </div>
                                 ) : (
                                     <div className="w-52 h-52 relative overflow-hidden rounded-md">
-                                        <Image
+                                        <CldImage
                                             fill
                                             style={{ objectFit: "cover" }}
                                             src={value}

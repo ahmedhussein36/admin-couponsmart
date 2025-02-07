@@ -38,6 +38,7 @@ export async function PUT(request: Request, { params }: { params: IParams }) {
         affiliateUrl,
         description,
         image,
+        faqs,
         translateLink,
         coverImage,
         rating,
@@ -80,6 +81,7 @@ export async function PUT(request: Request, { params }: { params: IParams }) {
             description,
             image,
             translateLink,
+            faqs,
             coverImage,
             rating: parseFloat(rating),
             votes: parseInt(votes),
@@ -105,8 +107,8 @@ export async function PUT(request: Request, { params }: { params: IParams }) {
         },
         data: {
             storeCategories: {
-                connect: categories.map((category: { id: string }) => ({
-                    id: category.id,
+                set: categories.map((category: { id: string }) => ({
+                    id: category,
                 })),
             },
         },

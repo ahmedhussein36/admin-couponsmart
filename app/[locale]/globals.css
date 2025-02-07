@@ -113,7 +113,7 @@ main {
   top: 0;
   bottom: 0;
   left: 0;
-  background-color: #ffffffd3;
+  background-color: #9b9b9bd3;
   filter: blur(20px);
   position: absolute;
   transition: all ease-in-out;

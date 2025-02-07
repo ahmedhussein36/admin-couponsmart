@@ -1,10 +1,10 @@
 import prisma from "@/app/libs/prismadb";
 
-interface IParams {
+export interface PostParams {
     postId?: string;
 }
 
-export default async function getStoreById(params: IParams) {
+export default async function getPostById(params: PostParams) {
     try {
         const { postId } = params;
 

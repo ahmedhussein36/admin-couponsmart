@@ -6,9 +6,14 @@ export const useUpdate = () => {
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
 
-    const updateData = async (apiUrl: string, data: any,) => {
+    const updateData = async (
+        apiUrl: string,
+        data: any,
+        newStatus?: string
+    ) => {
         setLoading(true);
         setError(null);
+        data.status = newStatus;
 
         try {
             const response = await axios.put(apiUrl, data);

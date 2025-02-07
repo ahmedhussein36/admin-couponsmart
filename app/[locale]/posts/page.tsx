@@ -5,12 +5,22 @@ import StoreFilter from "@/app/components/filter/StoreFilter";
 import Taps from "@/app/components/buttons/Taps";
 import StoreTable from "@/app/components/table/StoreTable";
 import AddNewButton from "@/app/components/buttons/AddNewButton";
+import PostTable from "@/app/components/table/PostTable";
+import getPosts, { IParams } from "@/app/actions/getPosts";
+import { getTranslations } from "next-intl/server";
+import ClientOnly from "@/app/components/ClientOnly";
 
-const PostsPage = () => {
-    const t = useTranslations();
+interface PostsProps {
+    searchParams: IParams;
+}
+
+const PostsPage = async ({ searchParams }: PostsProps) => {
+    const posts = await getPosts(searchParams);
+
+    const t = await getTranslations();
     const taps = [
         { id: "0", label: t("taps.all"), path: "" },
-        { id: "1", label: t("taps.published"), path: "?status=publised" },
+        { id: "1", label: t("taps.published"), path: "?status=published" },
         { id: "2", label: t("taps.draft"), path: "?status=draft" },
         { id: "3", label: t("taps.trash"), path: "?status=trashed" },
     ];
@@ -22,7 +32,7 @@ const PostsPage = () => {
                 <div className=" flex justify-start gap-3 items-end">
                     <Heading
                         title={t("posts.posts")}
-                        subtitle={t("posts.all posts") + " " + ":" + " " + 15}
+                        subtitle={t("posts.all posts") + `: ${posts.length}`}
                     />
                 </div>
 
@@ -34,11 +44,12 @@ const PostsPage = () => {
                 </div>
             </div>
 
-            <Taps taps={taps} parent="stores" />
-
-            <StoreFilter />
-
-            <StoreTable stores={[]} />
+            <Taps taps={taps} parent="posts" />
+            <div className="w-full">
+                <ClientOnly>
+                    <PostTable posts={posts as any} />
+                </ClientOnly>
+            </div>
         </div>
     );
 };

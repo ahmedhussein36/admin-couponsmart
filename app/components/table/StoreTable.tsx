@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
 import { TableBody, TableCell, TableHead, TableRow } from "./Table";
@@ -12,15 +13,17 @@ import Confirm from "@/app/components/Confirm";
 import { RiShareBoxFill } from "react-icons/ri";
 import SearchInput from "../inputs/SearchInput";
 import LangaugeTaps from "../buttons/LangaugeTaps";
-import TableSkelton from "../TableSkelton";
 import NoData from "../NoData";
 import Status from "../coupons/Status";
+import { Link } from "@/i18n/routing";
+import { SafeStore } from "@/app/types";
 
 interface TableProps {
-    stores: any[];
+    stores: SafeStore[];
+    parent: string;
 }
 
-const StoreTable = ({ stores }: TableProps) => {
+const StoreTable = ({ stores, parent }: TableProps) => {
     const t = useTranslations("table");
 
     const head = [
@@ -46,16 +49,16 @@ const StoreTable = ({ stores }: TableProps) => {
     function onDelete(id: string) {
         setIsLoading(true);
         axios
-            .delete(`/api/store/${id}`)
+            .delete(`/api/stores/${id}`)
             .then(() => {
                 confirm.onClose();
-                toast.success("Done : user deleted Successfully");
+                toast.success("Done : store deleted Successfully");
                 router.refresh();
             })
             .catch((error) => {
                 toast.error(
                     error?.response?.data?.error ||
-                        "Error : Can't delete this user"
+                        "Error : Can't delete this store"
                 );
             })
             .finally(() => {
@@ -115,21 +118,27 @@ const StoreTable = ({ stores }: TableProps) => {
                     <TableBody>
                         {filteredData.map((item, index) => (
                             <TableRow key={item.id}>
-                                <TableCell>{item.image}</TableCell>
+                                <TableCell>
+                                    {item.image && (
+                                        <img
+                                            src={item.image}
+                                            alt="store logo"
+                                            className="w-10"
+                                        />
+                                    )}
+                                </TableCell>
                                 <TableCell>{item.title}</TableCell>
                                 <TableCell>{item.name}</TableCell>
                                 <TableCell>{item.coupons.length}</TableCell>
                                 <TableCell>{item.locale}</TableCell>
-                                <TableCell>{item.auther.name}</TableCell>
+                                <TableCell>{item.author.name}</TableCell>
                                 <TableCell>
                                     <Status status={item.status} />
                                 </TableCell>
                                 <TableCell>
                                     <div className=" flex justify-start items-center gap-1">
-                                        <div
-                                            onClick={() => {
-                                                router.push(`stores/${item.id}`);
-                                            }}
+                                        <Link
+                                            href={`${parent}/${item.id}`}
                                             title="Edit"
                                             className="rounded text-blue-500 dark:border-0 dark:bg-white/10 
                                                         border border-gray-300
@@ -138,7 +147,7 @@ const StoreTable = ({ stores }: TableProps) => {
                                         >
                                             {/* Edit  */}
                                             <FaEdit size={14} />
-                                        </div>
+                                        </Link>
                                         <div
                                             onClick={() => {
                                                 setStoreId(item.id);
@@ -177,6 +186,10 @@ const StoreTable = ({ stores }: TableProps) => {
             )}
         </div>
     );
+};
+
+export const StoreLogo = (url: string) => {
+    return <img src={url} alt="store logo" className="w-10 h-10" />;
 };
 
 export default StoreTable;

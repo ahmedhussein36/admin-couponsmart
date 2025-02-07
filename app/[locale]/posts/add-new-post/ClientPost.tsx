@@ -25,6 +25,7 @@ import {
 import CategorySelect from "@/app/components/inputs/CategorySelect";
 import { toast } from "react-toastify";
 import { useCreateStore } from "@/app/hooks/useCreateStore";
+import RTE from "@/app/components/inputs/RTE";
 
 enum STEPS {
     LANGAUGE = 1,
@@ -50,6 +51,7 @@ const ClientPost = ({ PostCategories }: { PostCategories: any[] }) => {
             image: "",
             coverImage: "",
             translateLink: "",
+            faqs: [],
             categories: [],
             tags: [],
             rating: 0,
@@ -73,6 +75,7 @@ const ClientPost = ({ PostCategories }: { PostCategories: any[] }) => {
         image,
         title,
         slug,
+        faqs,
         description,
         metaTitle,
         metaDescription,
@@ -113,8 +116,8 @@ const ClientPost = ({ PostCategories }: { PostCategories: any[] }) => {
     const onNext = () => {
         setStep((value) => value + 1);
     };
-    
-//callback funtion to get the locale value
+
+    //callback funtion to get the locale value
     const onLangaugeChange = (locale: string) => {
         setCustomValue("locale", locale);
     };
@@ -168,15 +171,15 @@ const ClientPost = ({ PostCategories }: { PostCategories: any[] }) => {
                         </div>
                     </div>
                 </div>
-                {/* <div className="w-full lg:w-[950px]">
-                        <RTE
-                            label={t("inputs.category description")}
-                            name="description"
-                            control={methods.control}
-                            defaultValue={methods.getValues("description")}
-                            dark
-                        />
-                    </div> */}
+                <div className="w-full lg:w-[950px]">
+                    <RTE
+                        label={t("inputs.category description")}
+                        name="description"
+                        control={methods.control}
+                        defaultValue={methods.getValues("description")}
+                        dark
+                    />
+                </div>
 
                 <Question name="faqs" />
                 <Features />

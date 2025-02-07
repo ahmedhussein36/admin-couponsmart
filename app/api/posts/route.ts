@@ -15,6 +15,7 @@ export async function POST(request: Request) {
         slug,
         description,
         image,
+        faqs,
         translateLink,
         metaTitle,
         metaDescription,
@@ -39,6 +40,7 @@ export async function POST(request: Request) {
             slug,
             description,
             image,
+            faqs,
             translateLink,
             metaTitle,
             metaDescription,
@@ -54,7 +56,7 @@ export async function POST(request: Request) {
             PostCategory: {
                 connect:
                     categories.map((category: { id: string }) => ({
-                        id: category.id,
+                        id: category,
                     })) || [],
             },
             Tags: {
