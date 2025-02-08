@@ -1,9 +1,9 @@
 "use client";
 import CategoryTable from "@/app/components/posts/CategoryTable";
 import CategoryForm from "@/app/components/posts/CategoryForm";
-import { Heading } from "@/app/utils/importData";
 import { useTranslations } from "next-intl";
 import React from "react";
+import Heading from "@/app/components/headings/Heading";
 
 interface CategoryProps{
     categories : any[]

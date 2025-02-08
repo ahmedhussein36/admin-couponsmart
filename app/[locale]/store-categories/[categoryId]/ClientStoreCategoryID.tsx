@@ -4,17 +4,7 @@ import { useRouter } from "next/navigation";
 import StoreDetails from "@/app/components/stores/StoreDetails";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
-import {
-    Button,
-    Heading,
-    ImageUpload,
-    Input,
-    OpenGraph,
-    Question,
-    SelectLangauge,
-    SeoDetails,
-    useTextSnippet,
-} from "@/app/utils/importData";
+
 import {
     FieldValues,
     FormProvider,
@@ -24,6 +14,15 @@ import {
 } from "react-hook-form";
 import { SafeStore } from "@/app/types";
 import { useUpdate } from "@/app/hooks/useUpdate";
+import Button from "@/app/components/buttons/Button";
+import Heading from "@/app/components/headings/Heading";
+import Input from "@/app/components/inputs/Input";
+import ImageUpload from "@/app/components/inputs/ImageUpload";
+import OpenGraph from "@/app/components/metadata/OpenGraph";
+import Question from "@/app/components/metadata/Question";
+import SeoDetails from "@/app/components/metadata/SeoDetails";
+import SelectLangauge from "@/app/components/stores/SelectLangauge";
+import { useTextSnippet } from "@/app/hooks/useTextSnippet";
 
 interface ClientStoreParams {
     store: SafeStore;

@@ -9,16 +9,6 @@ import {
     useWatch,
 } from "react-hook-form";
 import { useTranslations } from "next-intl";
-import {
-    Button,
-    CategorySelect,
-    CountrySelect,
-    Features,
-    Heading,
-    ImageUpload,
-    Input,
-    SelectLangauge,
-} from "@/app/utils/importData";
 import Selection from "@/app/components/inputs/Selection";
 import { toast } from "react-toastify";
 import StoreSelect from "@/app/components/inputs/StoreSelect";
@@ -27,6 +17,14 @@ import { useUpdate } from "@/app/hooks/useUpdate";
 import { SafeCoupon } from "@/app/types";
 import { BiEdit } from "react-icons/bi";
 import { Drawer } from "@/app/components/Drower";
+import Heading from "@/app/components/headings/Heading";
+import SelectLangauge from "@/app/components/stores/SelectLangauge";
+import Input from "@/app/components/inputs/Input";
+import ImageUpload from "@/app/components/inputs/ImageUpload";
+import Features from "@/app/components/stores/Features";
+import { CountrySelect } from "@/app/components/inputs/CountrySelect";
+import CategorySelect from "@/app/components/inputs/CategorySelect";
+import Button from "@/app/components/buttons/Button";
 
 const ClientCoupon = ({
     stores,

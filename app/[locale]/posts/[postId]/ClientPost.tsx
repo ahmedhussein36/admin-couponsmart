@@ -8,24 +8,22 @@ import {
     useWatch,
 } from "react-hook-form";
 import { useTranslations } from "next-intl";
-import {
-    Button,
-    Heading,
-    ImageUpload,
-    Input,
-    OpenGraph,
-    Question,
-    SeoDetails,
-    SelectLangauge,
-    useTextSnippet,
-    Features,
-} from "@/app/utils/importData";
 import CategorySelect from "@/app/components/inputs/CategorySelect";
 import { toast } from "react-toastify";
 import RTE from "@/app/components/inputs/RTE";
 import { SafePost } from "@/app/types";
 import { useUpdate } from "@/app/hooks/useUpdate";
 import { useRouter } from "@/i18n/routing";
+import Heading from "@/app/components/headings/Heading";
+import Button from "@/app/components/buttons/Button";
+import Input from "@/app/components/inputs/Input";
+import ImageUpload from "@/app/components/inputs/ImageUpload";
+import OpenGraph from "@/app/components/metadata/OpenGraph";
+import Question from "@/app/components/metadata/Question";
+import SeoDetails from "@/app/components/metadata/SeoDetails";
+import Features from "@/app/components/stores/Features";
+import SelectLangauge from "@/app/components/stores/SelectLangauge";
+import { useTextSnippet } from "@/app/hooks/useTextSnippet";
 
 interface ClientPostProps {
     post: SafePost;

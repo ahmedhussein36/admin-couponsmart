@@ -6,19 +6,17 @@ import { useCreateStore } from "@/app/hooks/useCreateStore";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 import {
-    Button,
-    Heading,
-    SelectLangauge,
-    CategorySelect,
-    useGeneratedSlug,
-} from "@/app/utils/importData";
-import {
     FieldValues,
     FormProvider,
     SubmitHandler,
     useForm,
     useWatch,
 } from "react-hook-form";
+import Heading from "@/app/components/headings/Heading";
+import Button from "@/app/components/buttons/Button";
+import CategorySelect from "@/app/components/inputs/CategorySelect";
+import SelectLangauge from "@/app/components/stores/SelectLangauge";
+import useGeneratedSlug from "@/app/hooks/useGeneratedSlug";
 
 enum STEPS {
     LANGAUGE = 1,

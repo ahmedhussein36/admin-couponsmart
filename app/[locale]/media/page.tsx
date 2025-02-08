@@ -9,8 +9,8 @@ import ImageDrawer from "@/app/components/media/ImageDrawer";
 import ImageGrid from "@/app/components/media/ImageGrid";
 import Confirm from "@/app/components/Confirm";
 import useConfirm from "@/app/hooks/useConfirm";
-import { Heading } from "@/app/utils/importData";
 import { toast } from "react-toastify";
+import Heading from "@/app/components/headings/Heading";
 
 type ImageType = {
     public_id: string;

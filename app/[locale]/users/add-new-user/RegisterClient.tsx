@@ -9,10 +9,12 @@ import {
     useForm,
 } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { Button, Heading, Input } from "@/app/utils/importData";
 import Selection from "@/app/components/inputs/Selection";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
+import Heading from "@/app/components/headings/Heading";
+import Input from "@/app/components/inputs/Input";
+import Button from "@/app/components/buttons/Button";
 const userStatus = ["pending", "active", "inactive"];
 const userRoles = ["user", "editor", "manager", "auther", "admin"];
 

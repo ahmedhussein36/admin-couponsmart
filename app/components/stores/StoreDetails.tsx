@@ -1,16 +1,14 @@
 "use client";
 import React, { useState } from "react";
-import {
-    ImageUpload,
-    Input,
-    OpenGraph,
-    Question,
-    SeoDetails,
-    Features,
-    useTextSnippet,
-} from "@/app/utils/importData";
 import { useTranslations } from "next-intl";
 import { useWatch } from "react-hook-form";
+import Input from "../inputs/Input";
+import { useTextSnippet } from "@/app/hooks/useTextSnippet";
+import ImageUpload from "../inputs/ImageUpload";
+import OpenGraph from "../metadata/OpenGraph";
+import Question from "../metadata/Question";
+import SeoDetails from "../metadata/SeoDetails";
+import Features from "./Features";
 
 const StoreDetails = () => {
     const [isLoading, setIsloading] = useState(false);

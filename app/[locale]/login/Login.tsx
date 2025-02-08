@@ -1,9 +1,11 @@
 // app/login/page.tsx
 "use client";
-import { Button, Heading, Input } from "@/app/utils/importData";
+import Button from "@/app/components/buttons/Button";
+import Heading from "@/app/components/headings/Heading";
+import Input from "@/app/components/inputs/Input";
 import { signIn } from "next-auth/react";
+import { CldImage } from "next-cloudinary";
 import { useTranslations } from "next-intl";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import {
@@ -78,7 +80,7 @@ const Login = () => {
             "
                 >
                     <div className="flex justify-center">
-                        <Image
+                        <CldImage
                             src={"/images/couponmart.png"}
                             alt="coupomart-logo"
                             width={80}

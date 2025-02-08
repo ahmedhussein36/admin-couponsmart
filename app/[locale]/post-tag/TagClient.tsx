@@ -1,7 +1,7 @@
 "use client";
+import Heading from "@/app/components/headings/Heading";
 import TagForm from "@/app/components/posts/TagForm";
 import TagTable from "@/app/components/posts/TagTable";
-import { Heading } from "@/app/utils/importData";
 import { useTranslations } from "next-intl";
 import React from "react";
 

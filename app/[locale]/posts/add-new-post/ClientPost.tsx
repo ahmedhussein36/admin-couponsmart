@@ -9,23 +9,21 @@ import {
 } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import {
-    Button,
-    Heading,
-    ImageUpload,
-    Input,
-    OpenGraph,
-    Question,
-    SeoDetails,
-    SelectLangauge,
-    useGeneratedSlug,
-    useTextSnippet,
-    Features,
-} from "@/app/utils/importData";
 import CategorySelect from "@/app/components/inputs/CategorySelect";
 import { toast } from "react-toastify";
 import { useCreateStore } from "@/app/hooks/useCreateStore";
 import RTE from "@/app/components/inputs/RTE";
+import ImageUpload from "@/app/components/inputs/ImageUpload";
+import OpenGraph from "@/app/components/metadata/OpenGraph";
+import Question from "@/app/components/metadata/Question";
+import SeoDetails from "@/app/components/metadata/SeoDetails";
+import Features from "@/app/components/stores/Features";
+import SelectLangauge from "@/app/components/stores/SelectLangauge";
+import useGeneratedSlug from "@/app/hooks/useGeneratedSlug";
+import { useTextSnippet } from "@/app/hooks/useTextSnippet";
+import Input from "@/app/components/inputs/Input";
+import Heading from "@/app/components/headings/Heading";
+import Button from "@/app/components/buttons/Button";
 
 enum STEPS {
     LANGAUGE = 1,

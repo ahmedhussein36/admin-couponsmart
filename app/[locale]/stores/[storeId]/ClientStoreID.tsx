@@ -5,12 +5,6 @@ import StoreDetails from "@/app/components/stores/StoreDetails";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 import {
-    Button,
-    Heading,
-    SelectLangauge,
-    CategorySelect,
-} from "@/app/utils/importData";
-import {
     FieldValues,
     FormProvider,
     SubmitHandler,
@@ -19,6 +13,10 @@ import {
 } from "react-hook-form";
 import { SafeStore, SafeStoreCategory } from "@/app/types";
 import { useUpdate } from "@/app/hooks/useUpdate";
+import Heading from "@/app/components/headings/Heading";
+import Button from "@/app/components/buttons/Button";
+import CategorySelect from "@/app/components/inputs/CategorySelect";
+import SelectLangauge from "@/app/components/stores/SelectLangauge";
 
 interface ClientStoreParams {
     store: SafeStore;
