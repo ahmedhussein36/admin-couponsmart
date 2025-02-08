@@ -2,7 +2,6 @@ import { useTranslations } from "next-intl";
 import React from "react";
 import Switch from "../inputs/Switch";
 import Collaps from "../collapse/Collaps";
-import ImageUpload from "../inputs/ImageUpload";
 
 const Features = () => {
     const t = useTranslations("features");

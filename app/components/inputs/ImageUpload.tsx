@@ -1,7 +1,6 @@
 "use client";
 
 import { CldImage, CldUploadWidget } from "next-cloudinary";
-import Image from "next/image";
 import React, { useCallback } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { LuImagePlus } from "react-icons/lu";
@@ -70,6 +69,8 @@ const ImageUpload = ({ name, social, label }: ImageUploadProps) => {
                                             style={{ objectFit: "cover" }}
                                             src={value}
                                             alt={value}
+                                            format={"auto"}
+                                            quality={"auto"}
                                         />
                                     </div>
                                 )}

@@ -32,7 +32,7 @@ const ImageDrawer: React.FC<ImageDrawerProps> = ({
 }) => {
     return (
         <div
-            className={` text-sm fixed top-0 right-0 h-full w-[400px] bg-background shadow-2xl shadow-slate-400/60 transform transition-transform ${
+            className={` text-sm fixed top-0 right-0 h-full w-[450px] bg-background shadow-2xl shadow-slate-400/60 transform transition-transform ${
                 isOpen ? "translate-x-0" : "translate-x-full"
             }`}
         >
@@ -42,12 +42,12 @@ const ImageDrawer: React.FC<ImageDrawerProps> = ({
                 </button>
                 {image && (
                     <>
-                        <div className=" my-4 bg-slate-100">
+                        <div className=" relative max-h-[300px] my-4 bg-slate-100 overflow-hidden">
                             <CldImage
                                 src={image.secure_url}
                                 alt={image.public_id}
                                 priority={false}
-                                width={480}
+                                width={450}
                                 height={100}
                                 className=" w-full h-full"
                             />

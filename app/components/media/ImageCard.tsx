@@ -32,7 +32,8 @@ const ImageCard: React.FC<ImageCardProps> = ({
             <CldImage
                 src={image.secure_url}
                 alt={image.public_id}
-                fill
+                fill priority={false}
+                loading="lazy"
                 className=" object-cover rounded-lg shadow-md group-hover:scale-105 duration-300 ease-in-out"
                 onClick={onClick}
             />
