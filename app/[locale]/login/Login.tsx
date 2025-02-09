@@ -42,17 +42,25 @@ const Login = () => {
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         setIsLoading(true);
+
         try {
-            await signIn("credentials", {
+            const response = await signIn("credentials", {
                 ...data,
                 redirect: false,
             });
 
-            router.refresh();
-            toast.success("Done!, You logged in successfully");
+            if (response?.ok) {
+                router.refresh();
+                toast.success("Done! You logged in successfully");
+            } else {
+                throw new Error(response?.error || "Login failed");
+            }
         } catch (error) {
-            toast.error("Invalid!, failed to login");
-            throw new Error("Invalid!, failed to login");
+            if (error instanceof Error) {
+                toast.error(error.message);
+            } else {
+                toast.error("An unexpected error occurred. Please try again.");
+            }
         } finally {
             setIsLoading(false);
         }
