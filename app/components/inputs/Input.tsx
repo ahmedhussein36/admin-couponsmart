@@ -1,4 +1,5 @@
 "use client";
+import { cn } from "@/lib/utils";
 import React from "react";
 import { useFormContext, Controller } from "react-hook-form";
 
@@ -52,7 +53,8 @@ const Input = ({
                         disabled={disabled}
                         required={required}
                         autoComplete="none"
-                        className={` w-full dark:border-neutral-500 border-2
+                        className={cn(
+                            ` w-full dark:border-neutral-500 border-2
                                     bg-white py-3 px-4 rounded-md dark:bg-transparent
                                     focus-visible:outline-none text-sm
                                     dark:text-neutral-200 dark:focus:border-neutral-300 focus:border-neutral-500
@@ -62,8 +64,10 @@ const Input = ({
                                             ? "border-red-500 dark:border-red-500"
                                             : "border-neutral-300 dark:border-neutral-500 "
                                     }
-                                    ${className}
-                                    `}
+                                
+                                    `,
+                            className
+                        )}
                     />
                     {error && (
                         <span className="text-red-500 text-sm">

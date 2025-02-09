@@ -1,7 +1,8 @@
 "use client";
-import React, { ReactElement } from "react";
+import { cn } from "@/lib/utils";
+import React, { ReactElement, ReactNode } from "react";
 interface ButtonProps {
-    children?: string | ReactElement;
+    children?: ReactNode;
     onClick: () => void;
     outline?: boolean;
     disabled?: boolean;
@@ -18,7 +19,8 @@ const Button = ({
         <button
             disabled={disabled}
             onClick={onClick}
-            className={`
+            className={cn(
+                `
             ${
                 outline
                     ? "bg-transparent border border-gray-400 hover:border-gray-600 dark:text-neutral-100 text-neutral-600"
@@ -29,8 +31,10 @@ const Button = ({
                         rounded-md  text-black
                         transition-all font-semibold
                         items-center py-2 px-6 text-sm 
-                        ${className}
-        `}
+                
+        `,
+                className
+            )}
         >
             {children}
         </button>

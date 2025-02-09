@@ -3,6 +3,7 @@
 import Button from "@/app/components/buttons/Button";
 import Heading from "@/app/components/headings/Heading";
 import Input from "@/app/components/inputs/Input";
+import { Spinner } from "@/components/ui/spinner";
 import { signIn } from "next-auth/react";
 import { CldImage } from "next-cloudinary";
 import { useTranslations } from "next-intl";
@@ -39,56 +40,54 @@ const Login = () => {
         },
     });
 
-    const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         setIsLoading(true);
-        signIn("credentials", {
-            ...data,
-            redirect: false,
-        }).then((callback) => {
+        try {
+            await signIn("credentials", {
+                ...data,
+                redirect: false,
+            });
+
+            router.refresh();
+            toast.success("Done!, You logged in successfully");
+        } catch (error) {
+            toast.error("Invalid!, failed to login");
+            throw new Error("Invalid!, failed to login");
+        } finally {
             setIsLoading(false);
-
-            if (callback?.ok) {
-                router.refresh();
-                toast.success("Done, logged in");
-            }
-
-            if (callback?.error) {
-                toast.error(callback.error || "failed to login");
-            }
-        });
+        }
     };
 
     return (
         <FormProvider {...methods}>
             <title>Auth: Login</title>
-            <div
-                className=" bg-slate-200 p-4
-            justify-center items-center login-box bg- dark:bg-gray-900 min-h-screen lg:p-0 m-0"
-            >
+            <div className="  p-4 justify-center items-center login-box bg-gray-900 min-h-screen lg:p-0 m-0">
                 <span className="bg-blur"></span>
                 <div className="w-full flex gap-2 justify-center items-center p-5">
-                    <GoShieldLock size={25} color="orange" />
+                    {/* <GoShieldLock size={25} color="orange" /> */}
                     <Heading title={t("login")} />
                 </div>
 
                 <div
-                    className=" bg-white lg:w-fit shadow-md
+                    className="lg:w-fit shadow-md
                                     backdrop:blur-lg
-                                    m-auto dark:bg-gray-700/50 
+                                    m-auto bg-gray-700/50 
                                     p-6 rounded-xl flex flex-col 
                                     justify-start items-center gap-7
             "
                 >
                     <div className="flex justify-center">
                         <CldImage
-                            src={"/images/couponmart.png"}
+                            src={
+                                "https://res.cloudinary.com/ds04j5ge0/image/upload/v1739010321/logo-icon_fo5kfp.png"
+                            }
                             alt="coupomart-logo"
                             width={80}
                             height={100}
                         />
                     </div>
                     <div className="font-semibold text-2xl">
-                        {t("welcome")}
+                        {/* {t("welcome")} */}
                         <h2 className="font-medium text-lg opacity-60">
                             {t("login to your account")}
                         </h2>
@@ -96,6 +95,7 @@ const Login = () => {
                     <div className="w-full lg:w-[500px]  flex flex-col justify-start items-center gap-6">
                         <div className=" w-full relative">
                             <Input
+                                className="bg-transparent"
                                 name="email"
                                 type="text"
                                 placeholder="Email"
@@ -109,13 +109,23 @@ const Login = () => {
                                 <IoEyeOffOutline />
                             </div>
                             <Input
+                                className="bg-transparent"
                                 name="password"
                                 placeholder="Password"
                                 type={type}
                             />
                         </div>
                     </div>
-                    <Button onClick={methods.handleSubmit(onSubmit)}>
+                    <Button
+                        className="bg-lime-500 space-x-2"
+                        onClick={methods.handleSubmit(onSubmit)}
+                    >
+                        {isLoading && (
+                            <Spinner
+                                size={"md"}
+                                className="bg-black dark:bg-white mx-2"
+                            />
+                        )}
                         {t("login")}
                     </Button>
                 </div>
