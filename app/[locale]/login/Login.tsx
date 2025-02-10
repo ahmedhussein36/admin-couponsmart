@@ -69,7 +69,7 @@ const Login = () => {
     return (
         <FormProvider {...methods}>
             <title>Auth: Login</title>
-            <div className="  p-4 justify-center items-center login-box bg-gray-900 min-h-screen lg:p-0 m-0">
+            <div className="text-white  p-4 justify-center items-center login-box bg-gray-900 min-h-screen lg:p-0 m-0">
                 <span className="bg-blur"></span>
                 <div className="w-full flex gap-2 justify-center items-center p-5">
                     {/* <GoShieldLock size={25} color="orange" /> */}
@@ -125,14 +125,13 @@ const Login = () => {
                         </div>
                     </div>
                     <Button
-                        className="bg-lime-500 space-x-2"
+                        outline
+                        className="text-white text-lg  flex justify-center items-center gap-2 w-full duration-300 ease-in-out"
                         onClick={methods.handleSubmit(onSubmit)}
+                        disabled={isLoading}
                     >
                         {isLoading && (
-                            <Spinner
-                                size={"md"}
-                                className="bg-black dark:bg-white mx-2"
-                            />
+                            <Spinner size={"md"} className="bg-white mx-2" />
                         )}
                         {t("login")}
                     </Button>
