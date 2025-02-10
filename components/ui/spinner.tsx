@@ -52,7 +52,7 @@ const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(
                         className="absolute top-0 left-1/2 w-[10%] h-full animate-spinner-leaf-fade -translate-x-1/2 -translate-y-1/2"
                         style={{
                             transform: `rotate(${i * 30}deg)`,
-                            animationDelay: `${10 -i * 0.1}s`,
+                            animationDelay: `${(i - 12) * 0.1}s`,
                         }}
                     >
                         <span

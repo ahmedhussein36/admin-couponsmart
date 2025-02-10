@@ -130,7 +130,7 @@ const Login = () => {
                         onClick={methods.handleSubmit(onSubmit)}
                         disabled={isLoading}
                     >
-                        {isLoading && (
+                        {!isLoading && (
                             <Spinner size={"md"} className="bg-white mx-2" />
                         )}
                         {t("login")}
