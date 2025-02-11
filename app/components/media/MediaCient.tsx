@@ -86,16 +86,16 @@ const MediaClient: React.FC<MediaClientProps> = ({ onImageSelect }) => {
     }, [images, selectedImages, onImageSelect]);
 
     if (error) return <p className="text-center text-red-500">{error}</p>;
-       const loadMoreImages = async () => {
-            if (nextCursor) {
-                const data = await fetchImages(nextCursor);
-                setImages((prevImages) => [...prevImages, ...data.resources]);
-                setNextCursor(data.next_cursor);
-            }
-        };
+    const loadMoreImages = async () => {
+        if (nextCursor) {
+            const data = await fetchImages(nextCursor);
+            setImages((prevImages) => [...prevImages, ...data.resources]);
+            setNextCursor(data.next_cursor);
+        }
+    };
 
     return (
-        <div className="container mx-auto p-6">
+        <div className="container h-full p-6">
             {/* أزرار التحكم */}
             <div className="flex justify-between items-center mb-3">
                 <UploadButton onUpload={handleUpload} />
@@ -112,7 +112,7 @@ const MediaClient: React.FC<MediaClientProps> = ({ onImageSelect }) => {
             {loading ? (
                 <ImageGrid />
             ) : (
-                <div className="grid grid-cols-3 max-h-[38rem] gap-2 overflow-y-scroll">
+                <div className="grid grid-cols-6 max-h-[38rem] gap-2 overflow-y-scroll">
                     {images.map((image) => (
                         <div
                             key={image.public_id}
@@ -141,10 +141,7 @@ const MediaClient: React.FC<MediaClientProps> = ({ onImageSelect }) => {
             {/* زر تحميل المزيد */}
             {hasMoreImages && (
                 <div className="text-center mt-4">
-                    <Button
-                        onClick={loadMoreImages}
-                        disabled={isLoadingMore}
-                    >
+                    <Button onClick={loadMoreImages} disabled={isLoadingMore}>
                         {isLoadingMore ? "Loading..." : "Load More"}
                     </Button>
                 </div>

@@ -286,6 +286,6 @@ th {
 
 
 
-.cloudinary-widget {
-  z-index: 9999 !important;
+iframe[title="Upload Widget"] {
+  pointer-events: all !important;
 }
