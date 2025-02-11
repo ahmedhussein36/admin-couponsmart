@@ -23,6 +23,7 @@ import Question from "@/app/components/metadata/Question";
 import SeoDetails from "@/app/components/metadata/SeoDetails";
 import SelectLangauge from "@/app/components/stores/SelectLangauge";
 import { useTextSnippet } from "@/app/hooks/useTextSnippet";
+import RTE from "@/app/components/inputs/RTE";
 
 interface ClientStoreParams {
     store: SafeStore;
@@ -186,15 +187,15 @@ const ClientStoreCategoryID = ({ store }: ClientStoreParams) => {
                         />
                     </div>
                 </div>
-                {/* <div className="w-full lg:w-[950px]">
-                        <RTE
-                            label={t("inputs.category description")}
-                            name="description"
-                            control={methods.control}
-                            defaultValue={methods.getValues("description")}
-                            dark
-                        />
-                    </div> */}
+                <div className="w-full lg:w-[950px]">
+                    <RTE
+                        label={t("inputs.category description")}
+                        name="description"
+                        control={methods.control}
+                        defaultValue={methods.getValues("description")}
+                        dark
+                    />
+                </div>
                 <Question name="faqs" />
                 <SeoDetails
                     defaultTtitle={metaTitle ? metaTitle : title}

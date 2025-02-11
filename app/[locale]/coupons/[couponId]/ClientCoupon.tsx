@@ -25,6 +25,7 @@ import Features from "@/app/components/stores/Features";
 import { CountrySelect } from "@/app/components/inputs/CountrySelect";
 import CategorySelect from "@/app/components/inputs/CategorySelect";
 import Button from "@/app/components/buttons/Button";
+import RTE from "@/app/components/inputs/RTE";
 
 const ClientCoupon = ({
     stores,
@@ -36,6 +37,8 @@ const ClientCoupon = ({
     coupon: SafeCoupon;
 }) => {
     const [storeName, setStoreName] = useState(coupon.Store.name);
+    const [showEditor, setShowEditor] = useState(false);
+    const [show, setShow] = useState("Edit content");
     const t = useTranslations();
     const router = useRouter();
     const { updateData, error, loading } = useUpdate();
@@ -96,6 +99,12 @@ const ClientCoupon = ({
         router.refresh();
         methods.reset();
     };
+
+    const showEditorHandler = () => {
+        setShowEditor(!showEditor);
+        setShow(!showEditor ? "Edit content" : "Hide editor");
+    };
+
     return (
         <FormProvider {...methods}>
             <div className="relative w-full flex flex-col justify-start items-start gap-3">
@@ -280,15 +289,18 @@ const ClientCoupon = ({
                         </div>
                     </div>
                 </div>
-                {/* <div className="w-full lg:w-[950px]">
-                    <RTE
-                        label={t("inputs.coupon description")}
-                        name="description"
-                        control={methods.control}
-                        defaultValue={methods.getValues("description")}
-                        dark
-                    />
-                </div> */}
+                <div className="w-full lg:w-[950px]">
+                    {showEditor && (
+                        <RTE
+                            label={t("inputs.coupon description")}
+                            name="description"
+                            control={methods.control}
+                            defaultValue={methods.getValues("description")}
+                            dark
+                        />
+                    )}
+                    <Button onClick={showEditorHandler}>{show}</Button>
+                </div>
                 <Features />
 
                 <CountrySelect name="countries" />

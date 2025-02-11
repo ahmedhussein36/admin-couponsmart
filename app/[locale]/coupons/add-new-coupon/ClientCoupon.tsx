@@ -31,6 +31,7 @@ import ImageUpload from "@/app/components/inputs/ImageUpload";
 import Features from "@/app/components/stores/Features";
 import Heading from "@/app/components/headings/Heading";
 import Button from "@/app/components/buttons/Button";
+import RTE from "@/app/components/inputs/RTE";
 
 enum STEPS {
     LANGAUGE = 1,
@@ -46,6 +47,8 @@ const ClientCoupon = ({
     stores: any;
     categories: any;
 }) => {
+    const [showEditor, setShowEditor] = useState(false);
+    const [show, setShow] = useState("Edit content");
     const [step, setStep] = useState(STEPS.LANGAUGE);
     const [selected, setSelected] = useState(false);
     const [storeName, setStoreName] = useState("");
@@ -108,20 +111,24 @@ const ClientCoupon = ({
         setStoreName(value);
     };
 
+    const showEditorHandler = () => {
+        setShowEditor(!showEditor);
+        setShow(showEditor ? "Edit content" : "Hide editor");
+    };
+
     let content = (
         <SelectLangauge coupon value={locale} onLocale={onLangaugeChange} />
     );
 
-    if (step === STEPS.COUNTRY) { 
+    if (step === STEPS.COUNTRY) {
         content = (
             <>
-              
                 <StoreSelect
                     stores={stores}
                     name={"storeId"}
                     lang={methods.getValues("locale")}
                     onSelect={onSelect}
-                />  
+                />
                 <CountrySelect name="countries" />
             </>
         );
@@ -234,15 +241,18 @@ const ClientCoupon = ({
                         </div>
                     </div>
                 </div>
-                {/* <div className="w-full lg:w-[950px]">
-                    <RTE
-                        label={t("inputs.coupon description")}
-                        name="description"
-                        control={methods.control}
-                        defaultValue={methods.getValues("description")}
-                        dark
-                    />
-                </div> */}
+                <div className="w-full lg:w-[950px]">
+                    {showEditor && (
+                        <RTE
+                            label={t("inputs.coupon description")}
+                            name="description"
+                            control={methods.control}
+                            defaultValue={methods.getValues("description")}
+                            dark
+                        />
+                    )}
+                    <Button onClick={showEditorHandler}>{show}</Button>
+                </div>
                 <Features />
             </>
         );

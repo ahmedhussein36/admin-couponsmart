@@ -21,6 +21,7 @@ import SelectLangauge from "@/app/components/stores/SelectLangauge";
 import useGeneratedSlug from "@/app/hooks/useGeneratedSlug";
 import Button from "@/app/components/buttons/Button";
 import Heading from "@/app/components/headings/Heading";
+import RTE from "@/app/components/inputs/RTE";
 
 enum STEPS {
     LANGAUGE = 1,
@@ -138,15 +139,15 @@ const ClientAddCtegory = () => {
                         </div>
                     </div>
                 </div>
-                {/* <div className="w-full lg:w-[950px]">
-                        <RTE
-                            label={t("inputs.category description")}
-                            name="description"
-                            control={methods.control}
-                            defaultValue={methods.getValues("description")}
-                            dark
-                        />
-                    </div> */}
+                <div className="w-full lg:w-[950px]">
+                    <RTE
+                        label={t("inputs.category description")}
+                        name="description"
+                        control={methods.control}
+                        defaultValue={methods.getValues("description")}
+                        dark
+                    />
+                </div>
                 <Question name="faqs" />
                 <SeoDetails
                     defaultTtitle={metaTitle ? metaTitle : title}

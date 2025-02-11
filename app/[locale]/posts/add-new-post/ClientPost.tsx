@@ -32,6 +32,8 @@ enum STEPS {
 }
 
 const ClientPost = ({ PostCategories }: { PostCategories: any[] }) => {
+    const [showEditor, setShowEditor] = useState(false);
+    const [show, setShow] = useState("Edit content");
     const [step, setStep] = useState(STEPS.LANGAUGE);
     const [isLoading, setIsloading] = useState(false);
     const [selected, setSelected] = useState(false);
@@ -120,6 +122,11 @@ const ClientPost = ({ PostCategories }: { PostCategories: any[] }) => {
         setCustomValue("locale", locale);
     };
 
+    const showEditorHandler = () => {
+        setShowEditor(!showEditor);
+        setShow(showEditor ? "Edit content" : "Hide editor");
+    };
+
     let content = <SelectLangauge value={locale} onLocale={onLangaugeChange} />;
 
     if (step === STEPS.CATEGORY) {
@@ -170,13 +177,16 @@ const ClientPost = ({ PostCategories }: { PostCategories: any[] }) => {
                     </div>
                 </div>
                 <div className="w-full lg:w-[950px]">
-                    <RTE
-                        label={t("inputs.category description")}
-                        name="description"
-                        control={methods.control}
-                        defaultValue={methods.getValues("description")}
-                        dark
-                    />
+                    {showEditor && (
+                        <RTE
+                            label={t("inputs.coupon description")}
+                            name="description"
+                            control={methods.control}
+                            defaultValue={methods.getValues("description")}
+                            dark
+                        />
+                    )}
+                    <Button onClick={showEditorHandler}>{show}</Button>
                 </div>
 
                 <Question name="faqs" />

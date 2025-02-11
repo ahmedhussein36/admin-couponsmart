@@ -10,8 +10,11 @@ import Question from "../metadata/Question";
 import SeoDetails from "../metadata/SeoDetails";
 import Features from "./Features";
 import RTE from "../inputs/RTE";
+import { Button } from "@/components/ui/button";
 
 const StoreDetails = () => {
+    const [showEditor, setShowEditor] = useState(false);
+    const [show, setShow] = useState("Edit content");
     const [isLoading, setIsloading] = useState(false);
     const { control, getValues } = useFormContext();
     const t = useTranslations();
@@ -28,6 +31,11 @@ const StoreDetails = () => {
     } = useWatch();
 
     const snippet = useTextSnippet(description ? description : "", 120);
+
+    const showEditorHandler = () => {
+        setShowEditor(!showEditor);
+        setShow(showEditor ? "Edit content" : "Hide editor");
+    };
 
     return (
         <>
@@ -76,13 +84,16 @@ const StoreDetails = () => {
                 </div>
             </div>
             <div className="w-full lg:w-[950px]">
-                <RTE
-                    label={t("inputs.category description")}
-                    name="description"
-                    control={control}
-                    defaultValue={getValues("description")}
-                    dark
-                />
+                {showEditor && (
+                    <RTE
+                        label={t("inputs.coupon description")}
+                        name="description"
+                        control={control}
+                        defaultValue={getValues("description")}
+                        dark
+                    />
+                )}
+                <Button onClick={showEditorHandler}>{show}</Button>
             </div>
 
             <Question name="faqs" />
