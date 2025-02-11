@@ -7,7 +7,7 @@ const ToasterProvider = () => {
     return (
         <ToastContainer
             newestOnTop
-            autoClose={8000}
+            autoClose={3000}
             theme={"light"}
             position="bottom-right"
             style={{

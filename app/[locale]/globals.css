@@ -281,3 +281,11 @@ th {
     @apply bg-background text-foreground;
   }
 }
+
+
+
+
+
+.cloudinary-widget {
+  z-index: 9999 !important;
+}

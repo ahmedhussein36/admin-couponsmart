@@ -2,12 +2,12 @@
 
 import { CldUploadWidget } from "next-cloudinary";
 import { TbCloudUpload } from "react-icons/tb";
-
 declare global {
     var cloudinary: any;
 }
 
-const uploadPreset = "remaxroyal";
+const uploadPreset =
+    process.env.NEXT_PUBLIC_CLOUDINARY_PRESET || "next_coupons";
 
 type UploadButtonProps = {
     onUpload: (image: any) => void;
@@ -18,10 +18,9 @@ const UploadButton: React.FC<UploadButtonProps> = ({ onUpload }) => {
         <CldUploadWidget
             uploadPreset={uploadPreset}
             options={{
-                maxFiles: 100,
                 folder: "uploads",
             }}
-            onUpload={(result) => {
+            onSuccess={(result) => {
                 if (result.event === "success") {
                     onUpload(result.info);
                 }
@@ -30,14 +29,16 @@ const UploadButton: React.FC<UploadButtonProps> = ({ onUpload }) => {
             {({ open }) => {
                 return (
                     <button
-                        onClick={() => open?.()}
+                        onClick={() => {
+                            open?.();
+                        }}
                         className="
-                                bg-rose-500 
+                                bg-blue-500 
                                 text-white px-4 
-                                py-3 font-medium 
+                                py-1 font-medium 
                                 min-w-[100px] 
                                 rounded-md flex justify-center items-center gap-3
-                                hover:bg-rose-600"
+                                hover:bg-blue-600"
                     >
                         <TbCloudUpload size={20} /> Upload Image
                     </button>

@@ -13,6 +13,7 @@ import useConfirm from "@/app/hooks/useConfirm";
 import EmptyState from "@/app/components/EmptyState";
 import UserFilter from "@/app/components/UserFilter";
 import { toast } from "react-toastify";
+import { Link } from "@/i18n/routing";
 
 const userStatus = ["active", "pending", "inactive"];
 const userRoles = ["admin", "manager", "editor", "author", "user"];
@@ -150,12 +151,8 @@ const CompoundClient: React.FC<Props> = ({ admins }) => {
                                                     "- -"}
                                             </td>
                                             <td className=" flex justify-start items-center gap-3">
-                                                <div
-                                                    onClick={() => {
-                                                        router.push(
-                                                            `users/${item.id}`
-                                                        );
-                                                    }}
+                                                <Link
+                                                    href={`/users/${item.id}`}
                                                     title="Edit"
                                                     className=" hover:bg-blue-500 bg-blue-600 rounded-full
                                                         cursor-pointer  p-2 text-white transition-all
@@ -163,7 +160,7 @@ const CompoundClient: React.FC<Props> = ({ admins }) => {
                                                 >
                                                     {/* Edit  */}
                                                     <FaEdit size={16} />
-                                                </div>
+                                                </Link>
                                                 <div
                                                     onClick={() => {
                                                         setUserId(item.id);

@@ -34,12 +34,6 @@ const SeoDetails = ({
                             className=" border text-base "
                         />
                         <Input
-                            name="slug"
-                            label={"slug"}
-                            className=" border text-base"
-                            disabled
-                        />
-                        <Input
                             name="canonicalLink"
                             label={"Canonical URL"}
                             className=" border text-base"

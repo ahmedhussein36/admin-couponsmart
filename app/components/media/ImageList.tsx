@@ -1,7 +1,5 @@
 import React from "react";
-import Image from "next/image";
 import { FaRegCopy } from "react-icons/fa";
-import ActionMenu from "./ActionMenu";
 import { CldImage } from "next-cloudinary";
 
 type ImageCardProps = {
@@ -9,32 +7,31 @@ type ImageCardProps = {
         public_id: string;
         secure_url: string;
     };
+    selected?: boolean;
     onClick: () => void;
     onCopy: () => void;
-    onDownload: () => void;
-    onDelete: () => void;
-    onDetails: () => void;
 };
 
-const ImageCard: React.FC<ImageCardProps> = ({
+const ImageList: React.FC<ImageCardProps> = ({
+    selected,
     image,
     onClick,
     onCopy,
-    onDownload,
-    onDelete,
-    onDetails,
 }) => {
     return (
-        <div className=" relative">
+        <div className=" relative w-full h-[8rem] overflow-hidden rounded-md">
             <CldImage
                 src={image.secure_url}
                 alt={image.public_id}
-                quality={"auto"}
-                format="auto"
-                width={250}
-                height={100}
+                priority={false}
+                fill
+                sizes={" "}
                 loading="lazy"
-                className="w-full relative cursor-pointer h-full object-cover rounded hover:scale-105 duration-300 ease-in-out"
+                className={`${
+                    selected
+                        ? " h-full w-full border-blue-500 opacity-90"
+                        : " border-transparent"
+                } object-cover border-2 rounded group-hover:scale-105 duration-300 ease-in-out`}
                 onClick={onClick}
             />
             <div className="absolute top-2 right-2 flex space-x-2">
@@ -44,15 +41,9 @@ const ImageCard: React.FC<ImageCardProps> = ({
                 >
                     <FaRegCopy size={14} />
                 </button>
-                <ActionMenu
-                    onCopy={onCopy}
-                    onDownload={onDownload}
-                    onDelete={onDelete}
-                    onDetails={onDetails}
-                />
             </div>
         </div>
     );
 };
 
-export default ImageCard;
+export default ImageList;

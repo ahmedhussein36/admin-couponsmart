@@ -91,7 +91,9 @@ const Login = () => {
                             }
                             alt="coupomart-logo"
                             width={80}
-                            height={100}
+                            height={80}
+                            priority
+                            className="w-auto h-auto"
                         />
                     </div>
                     <div className="font-semibold text-2xl">
@@ -130,7 +132,7 @@ const Login = () => {
                         onClick={methods.handleSubmit(onSubmit)}
                         disabled={isLoading}
                     >
-                        {!isLoading && (
+                        {isLoading && (
                             <Spinner size={"md"} className="bg-white mx-2" />
                         )}
                         {t("login")}

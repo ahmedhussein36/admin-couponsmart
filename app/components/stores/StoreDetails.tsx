@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useTranslations } from "next-intl";
-import { useWatch } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 import Input from "../inputs/Input";
 import { useTextSnippet } from "@/app/hooks/useTextSnippet";
 import ImageUpload from "../inputs/ImageUpload";
@@ -9,14 +9,15 @@ import OpenGraph from "../metadata/OpenGraph";
 import Question from "../metadata/Question";
 import SeoDetails from "../metadata/SeoDetails";
 import Features from "./Features";
+import RTE from "../inputs/RTE";
 
 const StoreDetails = () => {
     const [isLoading, setIsloading] = useState(false);
+    const { control, getValues } = useFormContext();
     const t = useTranslations();
     const {
         image,
         title,
-        faqs,
         slug,
         description,
         metaTitle,
@@ -74,15 +75,15 @@ const StoreDetails = () => {
                     </div>
                 </div>
             </div>
-            {/* <div className="w-full lg:w-[950px]">
-            <RTE
-                label={t("inputs.category description")}
-                name="description"
-                control={methods.control}
-                defaultValue={methods.getValues("description")}
-                dark
-            />
-        </div> */}
+            <div className="w-full lg:w-[950px]">
+                <RTE
+                    label={t("inputs.category description")}
+                    name="description"
+                    control={control}
+                    defaultValue={getValues("description")}
+                    dark
+                />
+            </div>
 
             <Question name="faqs" />
             <Features />
