@@ -49,7 +49,7 @@ const StoreTable = ({ stores, parent }: TableProps) => {
     function onDelete(id: string) {
         setIsLoading(true);
         axios
-            .delete(`/api/stores/${id}`)
+            .delete(`/api/storesCtegory/${id}`)
             .then(() => {
                 confirm.onClose();
                 toast.success("Done : store deleted Successfully");
