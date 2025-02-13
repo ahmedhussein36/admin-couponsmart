@@ -17,6 +17,10 @@ import Heading from "@/app/components/headings/Heading";
 import Button from "@/app/components/buttons/Button";
 import CategorySelect from "@/app/components/inputs/CategorySelect";
 import SelectLangauge from "@/app/components/stores/SelectLangauge";
+import { Trash } from "lucide-react";
+import { BsTrash2 } from "react-icons/bs";
+import { FaTrash } from "react-icons/fa6";
+import { BiTrash } from "react-icons/bi";
 
 interface ClientStoreParams {
     store: SafeStore;
@@ -73,6 +77,21 @@ const ClientStoreID = ({ store, allCategories }: ClientStoreParams) => {
     const { locale, categories } = useWatch(methods);
     const onLangaugeChange = (locale: string) => {
         setCustomValue("locale", locale);
+    };
+
+    const onTrash: SubmitHandler<FieldValues> = async (data) => {
+        const api = `/api/stores/${store.id}`;
+
+        await toast.promise(updateData(api, data, "trashed"), {
+            pending: "Moving store to trash ...",
+            success: "Store moved to trash successfully!",
+            error: {
+                render() {
+                    return error || "Error: Unable to delete this store.";
+                },
+            },
+        });
+        router.refresh();
     };
 
     const onSave: SubmitHandler<FieldValues> = async (data) => {
@@ -135,6 +154,14 @@ const ClientStoreID = ({ store, allCategories }: ClientStoreParams) => {
                                 {t("buttons.publish")}
                             </Button>
                         )}
+                        <Button
+                        
+                            onClick={methods.handleSubmit(onTrash)}
+                            disabled={loading}
+                            className=" bg-rose-200 hover:bg-rose-200/80"
+                        >
+                            <BiTrash size={20} color="red"/>
+                        </Button>
                     </div>
                 </div>
 
