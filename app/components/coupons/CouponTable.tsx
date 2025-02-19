@@ -134,12 +134,61 @@ const CouponTable = ({ allStores, coupons }: TableProps) => {
         setFilteredData(filteredCoupons);
     }, [filteredCoupons]);
 
+    const handleAddToTrash = useCallback(
+        (id: string) => {
+            const confirm = window.confirm("🗑️ Are you sure you want to add coupon to trash?");
+            if (!confirm) return;
+    
+            setIsLoading(true);
+            const data = coupons.find((coupon) => coupon.id === id);
+            axios
+                .put(`/api/coupons/${id}`, { ...data, status: "trashed" })
+                .then(() => {
+                    toast.success("Coupon moved to trash successfully");
+                    router.refresh();
+                })
+                .catch((error) => {
+                    toast.error(
+                        error?.response?.data?.error ||
+                            "❌ Failed to move coupon to trash"
+                    );
+                })
+                .finally(() => {
+                    setIsLoading(false);
+                });
+        },
+        [coupons, router]
+    );
+
+    const onRestore = (id: string) => {
+        const confirm = window.confirm("Are you sure you want to restore?");
+        if (!confirm) return;
+        setIsLoading(true);
+        const data = coupons.find((coupon) => coupon.id === id);
+        axios
+            .put(`/api/coupons/${id}`, { ...data, status: "published" })
+            .then(() => {
+                toast.success("Coupon restored successfully");
+                router.refresh();
+            })
+            .catch((error) => {
+                toast.error(
+                    error?.response?.data?.error ||
+                        "❌ Failed to restore coupon"
+                );
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    };
+
     return (
         <div>
             <Confirm
                 isLoading={isLoading}
                 onDelete={() => onDelete(couponId)}
             />
+
             <div className="w-full grid grid-cols-6 justify-items-end items-end">
                 <SearchInput
                     Placeholder={t("search")}
@@ -197,45 +246,68 @@ const CouponTable = ({ allStores, coupons }: TableProps) => {
                                         <Status status={item.status} />
                                     </TableCell>
                                     <TableCell>
-                                        <div className=" flex justify-start items-center gap-3">
-                                            <Link
-                                                href={`coupons/${item.id}`}
-                                                title="Edit"
-                                                className="rounded border- text-blue-500
+                                        {item.status === "trashed" ? (
+                                            <div className="text-white flex gap-2">
+                                                <button
+                                                    className="bg-slate-400 p-1 rounded-md text-xs"
+                                                    onClick={() =>
+                                                        onRestore(item.id)
+                                                    }
+                                                >
+                                                    {t("restore")}
+                                                </button>
+                                                <button
+                                                    className=" text-xs border p-1 rounded-md bg-red-500"
+                                                    onClick={() => {
+                                                        setCouponId(item.id);
+                                                        confirm.onOpen();
+                                                    }}
+                                                >
+                                                    {t("delete permanently")}
+                                                </button>
+                                            </div>
+                                        ) : (
+                                            <div className=" flex justify-start items-center gap-3">
+                                                <Link
+                                                    href={`coupons/${item.id}`}
+                                                    title="Edit"
+                                                    className="rounded border- text-blue-500
                                                         cursor-pointer  p-1 transition-all
                                                         flex justify-center items-center"
-                                            >
-                                                {/* Edit  */}
-                                                <FaEdit size={14} />
-                                            </Link>
-                                            <div
-                                                onClick={() => {
-                                                    setCouponId(item.id);
-                                                    confirm.onOpen();
-                                                }}
-                                                title="Delete"
-                                                className="rounded border- text-red-500 hover:bg-red-50
+                                                >
+                                                    {/* Edit  */}
+                                                    <FaEdit size={14} />
+                                                </Link>
+                                                <div
+                                                    onClick={() => {
+                                                        handleAddToTrash(
+                                                            item.id
+                                                        );
+                                                    }}
+                                                    title="Delete"
+                                                    className="rounded border- text-red-500 hover:bg-red-50
                                                                 p-1 flex justify-center cursor-pointer
                                                                 items-center"
-                                            >
-                                                {/* Remove{" "} */}
-                                                <FiTrash2 size={16} />
-                                            </div>
-                                            <div
-                                                onClick={() => {
-                                                    router.push(
-                                                        `users/${item.id}`
-                                                    );
-                                                }}
-                                                title="Preview"
-                                                className="rounded text-purple-500
+                                                >
+                                                    {/* Remove{" "} */}
+                                                    <FiTrash2 size={16} />
+                                                </div>
+                                                <div
+                                                    onClick={() => {
+                                                        router.push(
+                                                            `users/${item.id}`
+                                                        );
+                                                    }}
+                                                    title="Preview"
+                                                    className="rounded text-purple-500
                                                                 p-1 flex justify-center cursor-pointer
                                                                 items-center"
-                                            >
-                                                {/* Remove{" "} */}
-                                                <RiShareBoxFill size={16} />
+                                                >
+                                                    {/* Remove{" "} */}
+                                                    <RiShareBoxFill size={16} />
+                                                </div>
                                             </div>
-                                        </div>
+                                        )}
                                     </TableCell>
                                 </TableRow>
                             ))}

@@ -31,18 +31,6 @@ const CouponsPage = async ({ searchParams }: { searchParams: IParams }) => {
                             coupons.length
                         }`}
                     />
-                    {/* <div className=" flex justify-start items-center gap-3">
-                        <Label
-                            label={`${t("stores.coupons")} : ${
-                                coupons.length
-                            } `}
-                            color="bg-lime-400"
-                        />
-                        <Label
-                            label={`5 ${t("stores.deals")}`}
-                            color="bg-sky-300"
-                        />
-                    </div> */}
                 </div>
 
                 <div className=" flex justify-end flex-grow">

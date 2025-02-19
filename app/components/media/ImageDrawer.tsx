@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { CldImage } from "next-cloudinary";
 import Image from "next/image";
 import React from "react";
@@ -42,14 +43,11 @@ const ImageDrawer: React.FC<ImageDrawerProps> = ({
                 </button>
                 {image && (
                     <>
-                        <div className=" relative max-h-[300px] my-4 bg-slate-100 overflow-hidden">
-                            <CldImage
-                                src={image.secure_url}
+                        <div className=" relative w-full h-[250px] my-4 bg-slate-100 overflow-hidden">
+                            <img
+                                src={`${image.secure_url}`}
                                 alt={image.public_id}
-                                priority={false}
-                                width={450}
-                                height={100}
-                                className=" w-full h-full"
+                                className="relative w-full h-full object-cover"
                             />
                         </div>
                         <div className="flex flex-col justify-center items-start gap-2">

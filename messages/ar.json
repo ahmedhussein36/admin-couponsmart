@@ -283,7 +283,11 @@
         "time": "الوقت",
         "by_store": "حسب المتجر",
         "by_country": "حسب البلد",
-        "by_type": "حسب النوع"
+        "by_type": "حسب النوع",
+        "restore": "استعادة",
+        "delete": "حذف",
+        "delete permanently": "حذف "
+
     },
     "NotFoundPage": {
         "title": " 404 الصفحة غير موجوده ",

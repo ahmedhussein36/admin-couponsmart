@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/app/libs/prismadb";
 import getCurrentUser from "@/app/actions/getCurrentUser";
+import { cleanObject } from "@/app/utils/cleanObject";
 
 interface CouponParams {
     couponId?: string;
@@ -32,6 +33,7 @@ export async function PUT(
         return new Response("Unauthorized", { status: 401 });
     }
     const body = await request.json();
+    const cleanBody = cleanObject(body);
     const {
         title,
         status,
@@ -48,10 +50,10 @@ export async function PUT(
         likes,
         expiredDate,
         storeId,
-    } = body;
+    } = cleanBody;
 
-    Object.keys(body).forEach((value: any) => {
-        if (!body[value]) {
+    Object.keys(cleanBody).forEach((value: any) => {
+        if (!cleanBody[value]) {
             NextResponse.error();
         }
     });
@@ -71,7 +73,7 @@ export async function PUT(
             image,
             locale,
             code,
-            discount: parseInt(discount), 
+            discount: parseInt(discount),
             countries,
             type,
             views: parseInt(views),

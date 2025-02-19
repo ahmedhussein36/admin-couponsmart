@@ -284,7 +284,10 @@
         "time": "Time",
         "by_store": "By store",
         "by_country": "By country",
-        "by_type": "By type"
+        "by_type": "By type",
+        "restore": "Restore",
+        "delete": "Delete",
+        "delete permanently": "Delete"
     },
     "NotFoundPage": {
         "title": " 404 | This page could not be found. ",

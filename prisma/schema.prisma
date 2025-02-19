@@ -77,6 +77,7 @@ model Coupon {
   description      String
   image            String
   code             String
+  affiliateUrl     String?
   discount         Int
   type             String
   countries        Json[]          @default([])
@@ -85,7 +86,7 @@ model Coupon {
   likes            Int
   expiredDate      String
   storeId          String          @db.ObjectId
-  StoreCategory    StoreCategory[] @relation(fields: [storeCategoryIds], references: [id] )
+  StoreCategory    StoreCategory[] @relation(fields: [storeCategoryIds], references: [id])
   storeCategoryIds String[]        @default([]) @db.ObjectId
   author           Admin           @relation(fields: [userId], references: [id], onDelete: NoAction)
   userId           String          @db.ObjectId

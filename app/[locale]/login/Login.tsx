@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 // app/login/page.tsx
 "use client";
 import Button from "@/app/components/buttons/Button";
@@ -85,15 +86,12 @@ const Login = () => {
             "
                 >
                     <div className="flex justify-center">
-                        <CldImage
-                            src={
-                                "https://res.cloudinary.com/ds04j5ge0/image/upload/v1739010321/logo-icon_fo5kfp.png"
-                            }
+                        <img
+                            src="https://res.cloudinary.com/ds04j5ge0/image/upload/v1739008806/logo-icon_km7zsy.png?w=80&h-80&f_auto&q_auto"
                             alt="coupomart-logo"
                             width={80}
                             height={80}
-                            priority
-                            className="w-auto h-auto"
+                            className="rounded-full"
                         />
                     </div>
                     <div className="font-semibold text-2xl">

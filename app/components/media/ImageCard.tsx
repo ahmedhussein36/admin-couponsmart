@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import Image from "next/image";
 import { FaRegCopy } from "react-icons/fa";
@@ -25,14 +26,10 @@ const ImageCard: React.FC<ImageCardProps> = ({
     onDetails,
 }) => {
     return (
-        <div className=" relative">
-            <CldImage
+        <div className="relative w-full h-[120px] overflow-hidden rounded-md">
+            <img
                 src={image.secure_url}
                 alt={image.public_id}
-                quality={"auto"}
-                format="auto"
-                width={250}
-                height={100}
                 loading="lazy"
                 className="w-full relative cursor-pointer h-full object-cover rounded hover:scale-105 duration-300 ease-in-out"
                 onClick={onClick}

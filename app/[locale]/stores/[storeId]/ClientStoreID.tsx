@@ -158,9 +158,9 @@ const ClientStoreID = ({ store, allCategories }: ClientStoreParams) => {
                         
                             onClick={methods.handleSubmit(onTrash)}
                             disabled={loading}
-                            className=" bg-rose-200 hover:bg-rose-200/80"
+                            className=" bg-muted hover:bg-muted/80"
                         >
-                            <BiTrash size={20} color="red"/>
+                            <BiTrash size={20} className=" text-red-500"/>
                         </Button>
                     </div>
                 </div>

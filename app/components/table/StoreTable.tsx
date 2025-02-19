@@ -94,6 +94,56 @@ const StoreTable = ({ stores, parent }: TableProps) => {
         setFilteredData(filteredStores);
     }, [filteredStores]);
 
+    const handleAddToTrash = (id: string) => {
+        const confirm = window.confirm(
+            "Are you sure you want to delete this store?"
+        );
+        if (!confirm) return;
+
+        setIsLoading(true);
+        const data = stores.find((store) => store.id === id);
+        axios
+            .put(`/api/${parent}/${id}`, { ...data, status: "trashed" })
+            .then(() => {
+                toast.success("Done : store moved to trash");
+                router.refresh();
+            })
+            .catch((error) => {
+                toast.error(
+                    error?.response?.data?.error ||
+                        "Error : Can't move this store to trash"
+                );
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    };
+
+    const onRestore = (id: string) => {
+        const confirm = window.confirm(
+            "Are you sure you want to restore this store?"
+        );
+        if (!confirm) return;
+
+        setIsLoading(true);
+        const data = stores.find((store) => store.id === id);
+        axios
+            .put(`/api/${parent}/${id}`, { ...data, status: "draft" })
+            .then(() => {
+                toast.success("Done : store restored successfully");
+                router.refresh();
+            })
+            .catch((error) => {
+                toast.error(
+                    error?.response?.data?.error ||
+                        "Error : Can't restore this store"
+                );
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    };
+
     return (
         <div>
             <Confirm isLoading={isLoading} onDelete={() => onDelete(storeId)} />
@@ -136,46 +186,51 @@ const StoreTable = ({ stores, parent }: TableProps) => {
                                     <Status status={item.status} />
                                 </TableCell>
                                 <TableCell>
-                                    <div className=" flex justify-start items-center gap-1">
-                                        <Link
-                                            href={`${parent}/${item.id}`}
-                                            title="Edit"
-                                            className="rounded text-blue-500 dark:border-0 dark:bg-white/10 
-                                                        border border-gray-300
-                                                        cursor-pointer w-7 h-7 transition-all
-                                                        flex justify-center items-center"
-                                        >
-                                            {/* Edit  */}
-                                            <FaEdit size={14} />
-                                        </Link>
-                                        <div
-                                            onClick={() => {
-                                                setStoreId(item.id);
-                                                confirm.onOpen();
-                                            }}
-                                            title="Delete"
-                                            className="rounded text-red-500 dark:bg-white/10 
-                                                        border border-gray-300 dark:border-0
-                                                        w-7 h-7 flex justify-center cursor-pointer
-                                                        items-center"
-                                        >
-                                            {/* Remove{" "} */}
-                                            <FiTrash2 size={16} />
+                                    {item.status === "trashed" ? (
+                                        <div className="text-white flex gap-2">
+                                            <button
+                                                className="bg-slate-400 p-1 rounded-md text-xs"
+                                                onClick={() =>
+                                                    onRestore(item.id)
+                                                }
+                                            >
+                                                {t("restore")}
+                                            </button>
+                                            <button
+                                                className=" text-xs border p-1 rounded-md bg-red-500"
+                                                onClick={() => {
+                                                    setStoreId(item.id);
+                                                    confirm.onOpen();
+                                                }}
+                                            >
+                                                {t("delete permanently")}
+                                            </button>
                                         </div>
-                                        <div
-                                            onClick={() => {
-                                                router.push(`users/${item.id}`);
-                                            }}
-                                            title="Preview"
-                                            className="rounded text-purple-500  dark:bg-white/10 
-                                                        border border-gray-300 dark:border-0
-                                                        w-7 h-7 flex justify-center cursor-pointer
-                                                        items-center"
-                                        >
-                                            {/* Remove{" "} */}
-                                            <RiShareBoxFill size={16} />
+                                    ) : (
+                                        <div className=" flex justify-start items-center gap-3">
+                                            <Link
+                                                href={`${parent}/${item.id}`}
+                                                title="Edit"
+                                                className="rounded border- text-blue-500
+                                                cursor-pointer  p-1 transition-all
+                                                flex justify-center items-center"
+                                            >
+                                                {/* Edit  */}
+                                                <FaEdit size={14} />
+                                            </Link>
+                                            <div
+                                                onClick={() =>
+                                                    handleAddToTrash(item.id)
+                                                }
+                                                title="Delete"
+                                                className="rounded border- text-red-500 hover:bg-red-50
+                                                p-1 flex justify-center cursor-pointer items-center"
+                                            >
+                                                {/* Remove{" "} */}
+                                                <FiTrash2 size={16} />
+                                            </div>
                                         </div>
-                                    </div>
+                                    )}
                                 </TableCell>
                             </TableRow>
                         ))}
