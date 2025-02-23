@@ -144,8 +144,6 @@ const ClientAddCtegory = () => {
                         label={t("inputs.category description")}
                         name="description"
                         control={methods.control}
-                        defaultValue={methods.getValues("description")}
-                        dark
                     />
                 </div>
                 <Question name="faqs" />

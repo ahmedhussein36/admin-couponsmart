@@ -82,8 +82,6 @@ const CategoryForm = () => {
                         label={t("inputs.description")}
                         name="description"
                         control={methods.control}
-                        defaultValue={methods.getValues("description")}
-                        dark
                     />
                 </div>
                 <Input

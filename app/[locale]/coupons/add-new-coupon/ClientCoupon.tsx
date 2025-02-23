@@ -247,8 +247,6 @@ const ClientCoupon = ({
                             label={t("inputs.coupon description")}
                             name="description"
                             control={methods.control}
-                            defaultValue={methods.getValues("description")}
-                            dark
                         />
                     )}
                     <Button onClick={showEditorHandler}>{show}</Button>

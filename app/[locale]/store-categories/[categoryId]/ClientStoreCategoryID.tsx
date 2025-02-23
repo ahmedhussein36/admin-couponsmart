@@ -192,8 +192,6 @@ const ClientStoreCategoryID = ({ store }: ClientStoreParams) => {
                         label={t("inputs.category description")}
                         name="description"
                         control={methods.control}
-                        defaultValue={methods.getValues("description")}
-                        dark
                     />
                 </div>
                 <Question name="faqs" />

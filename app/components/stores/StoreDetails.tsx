@@ -15,8 +15,8 @@ import { Button } from "@/components/ui/button";
 const StoreDetails = () => {
     const [showEditor, setShowEditor] = useState(false);
     const [show, setShow] = useState("Edit content");
-    const [isLoading, setIsloading] = useState(false);
-    const { control, getValues } = useFormContext();
+    const [isLoading] = useState(false);
+    const { control } = useFormContext();
     const t = useTranslations();
     const {
         image,
@@ -89,8 +89,6 @@ const StoreDetails = () => {
                         label={t("inputs.coupon description")}
                         name="description"
                         control={control}
-                        defaultValue={getValues("description")}
-                        dark
                     />
                 )}
                 <Button onClick={showEditorHandler}>{show}</Button>
