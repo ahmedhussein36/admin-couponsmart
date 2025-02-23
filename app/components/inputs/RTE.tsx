@@ -45,6 +45,7 @@ const RichTextEditor = ({ name, control, label }: RichTextEditorProps) => {
                             height: 500,
                             menubar: true,
                             plugins: [
+                                "directionality",
                                 "image",
                                 "advlist",
                                 "autolink",
@@ -67,9 +68,9 @@ const RichTextEditor = ({ name, control, label }: RichTextEditorProps) => {
                                 "anchor",
                             ],
                             toolbar:
-                                "undo redo | formatselect| blocks fontfamily fontsize | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify lineheight| " +
+                                "undo redo | formatselect| blocks fontfamily fontsize | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify lineheight|" +
                                 "bullist numlist outdent indent | forecolor backcolor | link image media |table| " +
-                                "removeformat | code fullscreen preview",
+                                "removeformat | code fullscreen preview|  ltr rtl | help",
                             toolbar_mode: "wrap",
 
                             content_style:
