@@ -182,7 +182,6 @@ const ClientPost = ({ PostCategories }: { PostCategories: any[] }) => {
                             label={t("inputs.post description")}
                             name="description"
                             control={methods.control}
-                            defaultValue={methods.getValues("description")}
                         />
                     )}
                     <Button onClick={showEditorHandler}>{show}</Button>

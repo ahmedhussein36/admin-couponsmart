@@ -207,7 +207,6 @@ const ClientPost = ({ PostCategories, post }: ClientPostProps) => {
                                 label={t("inputs.post description")}
                                 name="description"
                                 control={methods.control}
-                                // value ={methods.getValues("description")}
                             />
                         )}
                         <Button onClick={showEditorHandler}>{show}</Button>
