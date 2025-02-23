@@ -179,11 +179,10 @@ const ClientPost = ({ PostCategories }: { PostCategories: any[] }) => {
                 <div className="w-full lg:w-[950px]">
                     {showEditor && (
                         <RTE
-                            label={t("inputs.coupon description")}
+                            label={t("inputs.post description")}
                             name="description"
                             control={methods.control}
                             defaultValue={methods.getValues("description")}
-                            dark
                         />
                     )}
                     <Button onClick={showEditorHandler}>{show}</Button>

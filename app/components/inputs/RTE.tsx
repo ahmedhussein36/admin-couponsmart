@@ -1,35 +1,47 @@
-import React from "react";
-import { Controller } from "react-hook-form";
-import { Editor } from "@tinymce/tinymce-react";
-import { useTheme } from "next-themes";
+"use client";
 
-interface RTEProps {
+import { useEffect, useState } from "react";
+import { Controller } from "react-hook-form";
+import dynamic from "next/dynamic";
+import { IAllProps } from "@tinymce/tinymce-react";
+
+const Editor = dynamic(
+    () =>
+        import("@tinymce/tinymce-react").then(
+            (mod) => mod.Editor as React.ComponentType<IAllProps>
+        ),
+    {
+        ssr: false,
+    }
+);
+
+interface RichTextEditorProps {
     name: string;
     control: any;
-    label: string;
-    defaultValue: string;
-    dark: boolean;
+    label?: string;
 }
 
-function RTE({ name, control, label, defaultValue = "", dark }: RTEProps) {
-    const { theme, setTheme } = useTheme();
+const RichTextEditor = ({ name, control, label }: RichTextEditorProps) => {
+    const [loaded, setLoaded] = useState(false);
+
+    useEffect(() => {
+        setLoaded(true);
+    }, []);
+
+    if (!loaded) return <p>Loading editor...</p>;
+
     return (
-        <div className="">
-            {label && (
-                <label className="inline-block font-medium mb-1 ">
-                    {" "}
-                    {label}
-                </label>
-            )}
+        <div className="flex flex-col gap-2">
+            {label && <label className="font-medium">{label}</label>}
             <Controller
-                name={name || "content"}
+                name={name}
                 control={control}
-                render={({ field: { onChange } }) => (
+                render={({ field }) => (
                     <Editor
-                        initialValue={defaultValue}
                         apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY}
+                        value={field.value}
+                        onEditorChange={field.onChange}
                         init={{
-                            branding: false,
                             height: 500,
                             menubar: true,
                             plugins: [
@@ -54,17 +66,20 @@ function RTE({ name, control, label, defaultValue = "", dark }: RTEProps) {
                                 "wordcount",
                                 "anchor",
                             ],
-                            skin: theme === "dark" ? "oxide-dark" : "snow",
-                            content_css: theme === "dark" ? "dark" : "default",
                             toolbar:
-                                "undo redo | blocks | image | bold italic forecolor | alignleft aligncenter | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |removeformat | help",
+                                "undo redo | formatselect| blocks fontfamily fontsize | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify lineheight| " +
+                                "bullist numlist outdent indent | forecolor backcolor | link image media |table| " +
+                                "removeformat | code fullscreen preview",
+                            toolbar_mode: "wrap",
+
+                            content_style:
+                                "body { font-family: 'Inter', sans-serif; font-size: 16px; }",
                         }}
-                        onEditorChange={onChange}
                     />
                 )}
             />
         </div>
     );
-}
+};
 
-export default RTE;
+export default RichTextEditor;
