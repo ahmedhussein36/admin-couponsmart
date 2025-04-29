@@ -41,7 +41,7 @@ export default function HomePage() {
                 />
                 <LinkCard
                     label={t("customize")}
-                    link={"/settings/customize"}
+                    link={"/settings"}
                     icon={<GiPencilBrush size={30} color="lime" />}
                 />
             </div>

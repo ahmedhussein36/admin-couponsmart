@@ -183,3 +183,10 @@ model Tags {
   posts       Post[]   @relation(fields: [postIds], references: [id])
   postIds     String[] @default([]) @db.ObjectId
 }
+
+model CarouselItem {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  image     String?
+  link      String?
+  createdAt DateTime @default(now())
+}

@@ -1,19 +1,15 @@
 "use client";
 
-import { Key, useState } from "react";
+import { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { LuImagePlus, LuTrash2 } from "react-icons/lu";
 import { CldImage } from "next-cloudinary";
 import {
     Dialog,
     DialogContent,
-    DialogHeader,
-    DialogFooter,
-    DialogTitle,
 } from "@/components/ui/dialog";
 
 import MediaClient from "../media/MediaCient";
-import { Button } from "@/components/ui/button";
 
 interface ImageUploadProps {
     name: string;

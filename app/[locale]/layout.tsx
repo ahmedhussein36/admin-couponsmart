@@ -8,6 +8,7 @@ import Login from "./login/Login";
 import ToasterProvider from "../providers/ToastProvider";
 import { ThemeProvider } from "../providers/ThemeProvider";
 import TopLoader from "../components/TopLoader";
+import { ToastProvider } from "@/components/ui/use-toast";
 
 export default async function LocaleLayout({
     children,
@@ -37,21 +38,23 @@ export default async function LocaleLayout({
                     enableSystem
                     disableTransitionOnChange
                 >
-                    <NextIntlClientProvider messages={messages}>
-                        {!auth ? (
-                            <Login />
-                        ) : (
-                            <>
-                                <Header />
-                                <main className=" grid w-full bg-slate-100 dark:bg-transparent">
-                                    <div className=" col-span-1 w-[170px]">
-                                        <MainSidebar />
-                                    </div>
-                                    <div className="p-6 ">{children}</div>
-                                </main>
-                            </>
-                        )}
-                    </NextIntlClientProvider>
+                    <ToastProvider>
+                        <NextIntlClientProvider messages={messages}>
+                            {!auth ? (
+                                <Login />
+                            ) : (
+                                <>
+                                    <Header />
+                                    <main className=" grid w-full bg-slate-100 dark:bg-transparent">
+                                        <div className=" col-span-1 w-[170px]">
+                                            <MainSidebar />
+                                        </div>
+                                        <div className="p-6 ">{children}</div>
+                                    </main>
+                                </>
+                            )}
+                        </NextIntlClientProvider>
+                    </ToastProvider>
                 </ThemeProvider>
             </body>
         </html>
